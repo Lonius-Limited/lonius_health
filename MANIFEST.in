@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include lonius_health *.css
+recursive-include lonius_health *.csv
+recursive-include lonius_health *.html
+recursive-include lonius_health *.ico
+recursive-include lonius_health *.js
+recursive-include lonius_health *.json
+recursive-include lonius_health *.md
+recursive-include lonius_health *.png
+recursive-include lonius_health *.py
+recursive-include lonius_health *.svg
+recursive-include lonius_health *.txt
+recursive-exclude lonius_health *.pyc
