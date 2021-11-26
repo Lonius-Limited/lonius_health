@@ -43,6 +43,28 @@ def get_open_invoice(patient):
     })
     if len(invoices) > 0:
         invoice = invoices[0]
-        invoice = frappe.get_doc('Sales Invoice', invoices['name'])
+        invoice = frappe.get_doc('Sales Invoice', invoice['name'])
         return invoice
+    return
+
+def append_lab_invoice(doc, handler=None):
+    # doc.pat
+    invoice = get_open_invoice(doc.patient)
+    invoice.append('items',{
+        "item_code": doc.lab_test_name,
+        "qty": 1
+    })
+    invoice.run_method('set_missing_values')
+    invoice.save()
+    return
+
+
+def append_procedure_invoice(doc, handler=None):
+    invoice = get_open_invoice(doc.patient)
+    invoice.append('items',{
+        "item_code": doc.procedure_template,
+        "qty": 1
+    })
+    invoice.run_method('set_missing_values')
+    invoice.save()
     return

@@ -94,6 +94,12 @@ doc_events = {
 		"on_submit": ["lonius_health.api.lab_tests.create_lab_test",
 				"lonius_health.api.procedures.create_procedure"],
 	},
+	"Lab Test":{
+		"on_submit":["lonius_health.api.invoices.append_lab_invoice"]
+	},
+	"Clinical Procedure":{
+		"on_submit":["lonius_health.api.invoices.append_procedure_invoice"]
+	},
 
 }
 
