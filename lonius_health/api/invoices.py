@@ -35,3 +35,14 @@ def start_patient_visit(patient):
     
     return
 
+
+def get_open_invoice(patient):
+    invoices = frappe.get_list('Sales Invoice', filters={
+        'status':'Draft',
+        'patient': patient
+    })
+    if len(invoices) > 0:
+        invoice = invoices[0]
+        invoice = frappe.get_doc('Sales Invoice', invoices['name'])
+        return invoice
+    return
