@@ -1,4 +1,4 @@
-import frappe
+import frappe, json
 
 @frappe.whitelist()
 def get_pending_encounter_prescriptions():
@@ -13,3 +13,6 @@ def get_pending_encounter_prescriptions():
 
 
     return obj
+def make_encounter(args):
+    payload = json.loads(args)
+    frappe.msgprint(payload)
