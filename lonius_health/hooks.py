@@ -93,13 +93,17 @@ doc_events = {
 	"Patient Encounter": {
 		"on_submit": ["lonius_health.api.lab_tests.create_lab_test",
 				"lonius_health.api.procedures.create_procedure"],
+		"before_save": ["lonius_health.api.encounter.update_queue_state"]
 	},
 	"Lab Test":{
 		"on_submit":["lonius_health.api.invoices.append_lab_invoice"]
 	},
-	"Clinical Procedure":{
+	"Clinical Procedure": {
 		"on_submit":["lonius_health.api.invoices.append_procedure_invoice"]
 	},
+	"Vital Signs": {
+		"on_submit": ["lonius_health.api.encounter.vitals_submitted_update_encounter"]
+	}
 
 }
 

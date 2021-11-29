@@ -1,8 +1,8 @@
 # from warnings import filters
 import frappe
 import datetime
+from frappe import _
 
-COMPANY = "Lonius Limited"
 def open_invoice_exists(patient):
     invoices = frappe.get_list('Sales Invoice', filters={
         'status':'Draft',
@@ -13,6 +13,19 @@ def open_invoice_exists(patient):
     return False
 
 @frappe.whitelist()
+def is_visit_active(patient):
+    frappe.local.response.update({"status": open_invoice_exists(patient=patient)})
+    return
+
+@frappe.whitelist()
+def check_in(patient, practitioner):
+
+
+    pass
+
+
+
+@frappe.whitelist()
 def start_patient_visit(patient):
     consultation_item = frappe.get_doc('Healthcare Settings')
     consultation_item = consultation_item.op_consulting_charge_item
@@ -21,7 +34,7 @@ def start_patient_visit(patient):
             "doctype":"Sales Invoice",
             "patient": patient,
             "status":"Draft",
-            "company": COMPANY,
+            "company": frappe.defaults.get_user_default("Company"),
             'due_date': datetime.date.today(),
             "currency":"KES",
             "customer":patient
@@ -32,7 +45,9 @@ def start_patient_visit(patient):
         })
         invoice.run_method('set_missing_values')
         invoice.insert()
+        frappe.msgprint(_("Patient visit for {} has been started".format(patient)),)
         return
+    frappe.msgprint(_("Patient visit is ongoing"),)
     return
 
 

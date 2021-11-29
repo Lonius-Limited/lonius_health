@@ -1,0 +1,119 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2021-11-29 22:06:27.760325",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "pharmacy",
+  "section_break_2",
+  "patient",
+  "patient_name",
+  "customer",
+  "column_break_5",
+  "is_insurance_patient",
+  "encounter",
+  "section_break_7",
+  "prescription_items",
+  "total_invoice_amount",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "label": "Patient",
+   "options": "Patient"
+  },
+  {
+   "fetch_from": "patient.customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_insurance_patient",
+   "fieldtype": "Check",
+   "label": "Is Insurance Patient"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "prescription_items",
+   "fieldtype": "Table",
+   "label": "Prescription Items",
+   "options": "Pharmacy Prescription Item"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "total_invoice_amount",
+   "fieldtype": "Currency",
+   "label": "Total Invoice Amount"
+  },
+  {
+   "default": "Prescription Ready",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Prescription Ready\nInvoiced\nPaid"
+  },
+  {
+   "fieldname": "pharmacy",
+   "fieldtype": "Link",
+   "label": "Pharmacy",
+   "options": "Warehouse"
+  },
+  {
+   "fetch_from": "patient.patient_name",
+   "fieldname": "patient_name",
+   "fieldtype": "Data",
+   "label": "Patient Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "encounter",
+   "fieldtype": "Link",
+   "label": "Encounter",
+   "options": "Patient Encounter"
+  }
+ ],
+ "in_create": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2021-11-29 22:47:42.856040",
+ "modified_by": "Administrator",
+ "module": "Lonius Health",
+ "name": "Pharmacy Prescription",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
