@@ -92,7 +92,7 @@ app_license = "MIT"
 doc_events = {
 	"Patient Encounter": {
 		"on_submit": ["lonius_health.api.lab_tests.create_lab_test",
-				"lonius_health.api.procedures.create_procedure"],
+				"lonius_health.api.procedures.create_procedure","lonius_health.api.patients.make_prescription"],
 		"before_save": ["lonius_health.api.encounter.update_queue_state"]
 	},
 	"Lab Test":{

@@ -16,5 +16,4 @@ def create_lab_test(doc, handler=None):
             })
         lab_test.run_method('set_missing_values')
         lab_test.insert()
-        
     return 

@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "ANT.#####",
  "creation": "2021-11-28 22:26:24.115839",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -27,13 +28,13 @@
    "fieldname": "templates",
    "fieldtype": "Table",
    "label": "Templates",
-   "options": "Lab Test Template",
+   "options": "Lab Profile Templates",
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-29 09:17:20.913020",
+ "modified": "2021-11-30 12:12:38.544507",
  "modified_by": "Administrator",
  "module": "Lonius Health",
  "name": "Lab Profile",

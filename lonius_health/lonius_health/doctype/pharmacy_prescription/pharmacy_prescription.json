@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "format:PRESC-{#####}",
  "creation": "2021-11-29 22:06:27.760325",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -17,6 +18,7 @@
   "section_break_7",
   "prescription_items",
   "total_invoice_amount",
+  "section_break_12",
   "status"
  ],
  "fields": [
@@ -32,6 +34,7 @@
   },
   {
    "fetch_from": "patient.customer",
+   "fetch_if_empty": 1,
    "fieldname": "customer",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -63,20 +66,15 @@
    "default": "0.00",
    "fieldname": "total_invoice_amount",
    "fieldtype": "Currency",
-   "label": "Total Invoice Amount"
+   "label": "Total Invoice Amount",
+   "read_only": 1
   },
   {
    "default": "Prescription Ready",
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Prescription Ready\nInvoiced\nPaid"
-  },
-  {
-   "fieldname": "pharmacy",
-   "fieldtype": "Link",
-   "label": "Pharmacy",
-   "options": "Warehouse"
+   "options": "Prescription Ready\nPending Payment\nPrescription Serviced"
   },
   {
    "fetch_from": "patient.patient_name",
@@ -90,12 +88,24 @@
    "fieldtype": "Link",
    "label": "Encounter",
    "options": "Patient Encounter"
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:frappe.session.user=='Administrator'",
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "pharmacy",
+   "fieldtype": "Link",
+   "label": "Pharmacy",
+   "options": "Warehouse"
   }
  ],
  "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-29 22:47:42.856040",
+ "modified": "2021-11-30 17:46:00.380980",
  "modified_by": "Administrator",
  "module": "Lonius Health",
  "name": "Pharmacy Prescription",

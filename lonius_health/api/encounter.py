@@ -10,19 +10,23 @@ def update_queue_state(doc, handler=None):
     logged_in_user = frappe.session.user
     queue_log_table = frappe.new_doc("Queue Log")
     action_user = get_fullname(logged_in_user)
-    queue_log_table.update(
-		{
-			"doctype": "Queue Log",
-			"parenttype": doc.get("doctype"),
-			"parent": doc.get("name"),
-			"parentfield": "queue_log",
-            "action": doc.get('workflow_state'),
-			"timestamp": frappe.utils.data.now_datetime(),
-			"user": action_user,
-			"idx": len(doc.queue_log) + 1,
-		}
-	)
-    doc.queue_log.append(queue_log_table)
+    workflow_state = doc.get('workflow_state')
+    if not workflow_state: workflow_state = 'Checked In'
+    if workflow_state == 'Consultation': workflow_state = 'Start Consult'
+    if not frappe.db.exists({"doctype": "Queue Log", "parenttype": doc.get("doctype"), "parent": doc.get("name"), "action": workflow_state}):
+        queue_log_table.update(
+            {
+                "doctype": "Queue Log",
+                "parenttype": doc.get("doctype"),
+                "parent": doc.get("name"),
+                "parentfield": "queue_log",
+                "action": workflow_state,
+                "timestamp": frappe.utils.data.now_datetime(),
+                "user": action_user,
+                "idx": len(doc.queue_log) + 1,
+            }
+        )
+        doc.queue_log.append(queue_log_table)
     return
 
 #UPDATE THE WORKFLOW STATE OF THE ENCOUNTER DIRECTLY
@@ -60,3 +64,10 @@ def get_checked_in_encounter(patient):
     if len(checked_in_encounter) > 0:
         return checked_in_encounter
     return False
+
+@frappe.whitelist()
+def get_lab_profile_tests(docname=None):
+    if not docname or docname == '': return []
+    return frappe.get_list('Lab Profile Templates', filters={
+        'parent': docname
+    }, fields=["*"])
