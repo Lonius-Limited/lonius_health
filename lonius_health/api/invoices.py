@@ -1,7 +1,7 @@
 # from warnings import filters
 import frappe
 import datetime
-from frappe import _
+from frappe import _, msgprint
 
 COMPANY = frappe.defaults.get_user_default("company") #CAN WE PLEASE AVOID HARD CODING ANYTHING! "Lonius Limited" 
 
@@ -214,3 +214,17 @@ def make_invoice_endpoint(patient='', customer='',items=[]):
     invoice.save()
     return invoice
 
+def validate_payment(doc, handler = None):
+    #IF CUSTOMER IS OF TYPE COMPANY, THEN RETURN AS WE WILL ACCEPT INVOICING. IF NOT, THERE BETTER BE MONEY FIRST.
+    customer_type = frappe.db.get_value("Customer",doc.get('customer'), 'customer_type')
+    if customer_type == 'Company': return
+    from erpnext.selling.doctype.customer.customer import get_customer_outstanding
+    from frappe.utils import get_defaults
+    from frappe.utils.data import fmt_money
+    balance = get_customer_outstanding(doc.get('customer'), COMPANY, True ) * -1
+    if (doc.get('total') > balance):
+        needed_to_proceed = fmt_money(doc.get('total') - balance)
+        balance = fmt_money(balance)
+        currency = get_defaults().get('currency')
+        frappe.throw(f'The client needs to pay {currency}<b> {needed_to_proceed} </b> in order to proceed with this service. There is only {currency}<b> {balance} </b> available in their account.')
+    return

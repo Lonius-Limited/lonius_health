@@ -102,10 +102,9 @@
    "options": "Warehouse"
   }
  ],
- "in_create": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-11-30 17:46:00.380980",
+ "modified": "2021-12-02 00:51:32.260921",
  "modified_by": "Administrator",
  "module": "Lonius Health",
  "name": "Pharmacy Prescription",

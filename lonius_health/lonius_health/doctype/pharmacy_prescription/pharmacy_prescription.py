@@ -67,13 +67,14 @@ class PharmacyPrescription(Document):
 
         return to_return
 
-    def dispense_stock(self,invoice):
+    def dispense_stock(self, invoice):
         for x in self.get("prescription"):
             item, item_group = x.get("drug_code"), frappe.get_value(
                 "Item", x.get("drug_code"), 'item_group')
             uom = frappe.get_value("Item", x.get("drug_code"), 'stock_uom')
-            income_account = frappe.get_value("Item Default", dict(parent=item), 'income_account') or frappe.get_value(
-                "Item Default", dict(parent=item_group), 'income_account')
+            expense_account = frappe.get_value("Item Default", dict(parent=item), 'expense_account') or frappe.get_value(
+                "Item Default", dict(parent=item_group), 'expense_account')
             company = frappe.defaults.get_user_default("company")
-            row = dict(company=company,item_code=item, uom=uom,
-                       income_account=income_account, qty=x.get("qty"), rate=x.get("rate"), conversion_factor=1, from_warehouse=self.get("pharmacy"), sales_invoice=invoice.get("name"))
+            row = dict(company=company, item_code=item,
+                       expense_account=expense_account, qty=x.get("qty"), 
+                       rate=x.get("rate"), conversion_factor=1, from_warehouse=self.get("pharmacy"), sales_invoice_no=invoice.get("name"))

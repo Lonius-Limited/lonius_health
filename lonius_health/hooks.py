@@ -109,20 +109,23 @@ from lonius_health.api.procedures import (
 _clinicalProcedureTemplate.after_insert = _procedure_template_after_insert
 
 doc_events = {
-	"Patient Encounter": {
-		"on_submit": ["lonius_health.api.lab_tests.create_lab_test",
+	"Patient Encounter" : {
+		"on_submit" : ["lonius_health.api.lab_tests.create_lab_test",
 				"lonius_health.api.procedures.create_procedure","lonius_health.api.patients.make_prescription"],
-		"before_save": ["lonius_health.api.encounter.update_queue_state"]
+		"before_save" : ["lonius_health.api.encounter.update_queue_state"]
 	},
-	"Lab Test":{
+	"Lab Test" : {
 		"on_submit": ["lonius_health.api.invoices.append_lab_invoice"]
 	},
-	"Clinical Procedure": {
-		"on_submit": ["lonius_health.api.invoices.append_procedure_invoice"]
+	"Clinical Procedure" : {
+		"on_submit" : ["lonius_health.api.invoices.append_procedure_invoice"]
 	},
-	"Vital Signs": {
-		"on_submit": ["lonius_health.api.encounter.vitals_submitted_update_encounter"]
+	"Vital Signs" : {
+		"on_submit" : ["lonius_health.api.encounter.vitals_submitted_update_encounter"]
 	},
+	"Sales Invoice" : {
+		"on_update" : ["lonius_health.api.invoices.validate_payment"]
+	}
 	# "Lab Test Template": {
 	# 	"before_insert" : ["lonius_health.api.lab_tests.create_item_from_template"],
 	# 	"after_insert" : ["lonius_health.api.lab_tests.match_templatename_with_testname"]

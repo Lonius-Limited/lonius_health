@@ -4,11 +4,16 @@
 frappe.ui.form.on('Pharmacy Prescription', {
 
 	refresh: (frm) => {
-		frm.disable_save();
-		frm.get_field("prescription_items").grid.cannot_add_rows = true;
-		frm.get_field("prescription_items").grid.only_sortable();
-		refresh_field('prescription_items')
+		if (!frm.is_new()) {
+			frm.disable_save();
+		}
 
+		if (frm.doc.encounter) {//DISABLE ADDING DRUGS FOR ENCOUNTER PRESCRIPTIONS
+			frm.get_field("prescription_items").grid.cannot_add_rows = true;
+			frm.get_field("prescription_items").grid.only_sortable();
+			refresh_field('prescription_items')
+		}
+		// frm.get_field("prescription_items").grid.only_sortable();
 
 		if (frm.doc.status == 'Prescription Ready') {
 			frm.remove_custom_button(__("Make a Prescription Refill"))
@@ -20,7 +25,7 @@ frappe.ui.form.on('Pharmacy Prescription', {
 				//perform desired action such as routing to new form or fetching etc.
 				dispensePrescription(frm)
 			});
-			frm.fields_dict['prescription_items'].grid.add_custom_button('Add Drug', () => { addDrug(frm) }, 'primary')
+			// frm.fields_dict['prescription_items'].grid.add_custom_button('Add Drug', () => { addDrug(frm) }, 'primary')
 			frm.fields_dict['prescription_items'].grid.add_custom_button('Check Alternatives for Selected Drug', () => { drugAlternativeDialog(frm) }, 'primary')
 
 
@@ -39,9 +44,9 @@ frappe.ui.form.on('Pharmacy Prescription', {
 	},
 	onload_post_render: (frm) => {
 
-		frm.get_field("prescription_items").grid.cannot_add_rows = true;
-		frm.get_field("prescription_items").grid.only_sortable();
-		refresh_field('prescription_items')
+		// frm.get_field("prescription_items").grid.cannot_add_rows = true;
+		// frm.get_field("prescription_items").grid.only_sortable();
+		// refresh_field('prescription_items')
 	},
 	warehouse: (frm) => {
 
@@ -81,9 +86,31 @@ frappe.ui.form.on('Pharmacy Prescription', {
 });
 frappe.ui.form.on('Pharmacy Prescription Item', {
 	refresh(frm) {
-		frm.get_field("prescription_items").grid.cannot_add_rows = true;
+		// frm.get_field("prescription_items").grid.cannot_add_rows = true;
+		// frm.doc.encounter ? frm.set_df_property('prescription_item','drug_code', 'read_only', 1) : frm.set_df_property('prescription_item','drug_code', 'read_only', 0)
+
 	},
 	prescription_items_add: (frm) => {
+
+	},
+	period:(frm,cdt,cdn)=>{
+		const row = locals[cdt][cdn]
+		console.log(row.dosage);
+		if(!row.dosage){
+			frappe.throw("Sorry, you have to provide Dosage first! i.e 1-1-1,1-0-1 etc")
+		}
+		// let qty = frappe.get_doc("Drug Prescription",row.drug_code).get_quantity()
+
+		console.log(row.period);
+		frappe.call({
+			method: "lonius_health.api.patients.get_prescription_qty",
+			args:{
+				drug: row.drug_code,
+				dosage: row.dosage,
+				period: row.period
+			}
+		}).then(res=>console.log(res))
+
 
 	},
 	qty(frm, cdt, cdn) {
@@ -163,7 +190,7 @@ function drugAlternativeDialog(frm) {
 		["Item Alternative", "item_code", "IN", [selected.drug_code]],
 		["Item Alternative", "alternative_item_code", "IN", [selected.drug_code]]
 	]
-	
+
 	let d = new frappe.ui.Dialog({
 		title: 'Drug Alternative Search',
 		fields: [
@@ -231,9 +258,6 @@ function postPrescription(frm) {
 	})
 }
 
-function addDrug(frm) {
-
-}
 function refreshTotals(frm) {
 	let total = 0.00
 	frm.doc.prescription_items.forEach(row => {

@@ -174,6 +174,10 @@ def get_payers_linked_to_patient(patient):
 @frappe.whitelist()
 def dispense_prescription_slip(docname):
 	frappe.get_doc("Pharmacy Prescription",docname).dispense_prescription()
+@frappe.whitelist()
+def get_prescription_qty(drug,dosage,period):
+	args = dict(doctype='Drug Prescription',drug_code=drug,dosage=dosage,period=period)
+	return frappe.get_doc(args).get_quantity()
 
 
 
