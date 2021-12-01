@@ -123,7 +123,7 @@ def pending_lab_tests(patient):
     
 def pending_patient_encounters(patient):
     patient_encounter = frappe.get_list('Patient Encounter', filters={
-        'status':'Draft',
+        'docstatus': 0,
         'patient': patient
     })
     if len(patient_encounter) > 0:
@@ -173,9 +173,10 @@ def append_lab_invoice(doc, handler=None):
 
 def append_procedure_invoice(doc, handler=None):
     invoice = get_open_invoice(doc.patient)
+    procedure_item = frappe.db.get_value('Clinical Procedure Template', doc.procedure_template, 'item')
     if invoice:
         invoice.append('items',{
-            "item_code": doc.procedure_template,
+            "item_code": procedure_item,
             "qty": 1
         })
         invoice.run_method('set_missing_values')
@@ -183,7 +184,7 @@ def append_procedure_invoice(doc, handler=None):
     else:
         #FOR WHATEVER REASON, THERE IS NO INVOICE. LETS BILL THE PATIENT
         procedure_items = [{
-            "item_code": doc.procedure_template,
+            "item_code": procedure_item,
             "qty": 1
         }]
         customer = frappe.db.get_value('Patient', doc.patient, 'customer')
@@ -211,5 +212,5 @@ def make_invoice_endpoint(patient='', customer='',items=[]):
         invoice.append('items',item)
     invoice.run_method('set_missing_values')
     invoice.save()
-    return
+    return invoice
 

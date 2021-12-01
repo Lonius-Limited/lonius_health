@@ -160,6 +160,7 @@ def make_prescription(doc,state):
 			row.rate = rate
 			row.amount = amount
 			row.comment = drug.get("comment")
+			row.maximum_prescription_quantity = qty
 			# row.drug_code = drug.get("drug_code")
 		prescription_doc.insert()
 @frappe.whitelist()

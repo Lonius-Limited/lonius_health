@@ -14,6 +14,7 @@ def update_queue_state(doc, handler=None):
     if not workflow_state: workflow_state = 'Checked In'
     if workflow_state == 'Consultation': workflow_state = 'Start Consult'
     if not frappe.db.exists({"doctype": "Queue Log", "parenttype": doc.get("doctype"), "parent": doc.get("name"), "action": workflow_state}):
+        if len(doc.queue_log) == 1 and workflow_state == 'Checked In': return
         queue_log_table.update(
             {
                 "doctype": "Queue Log",

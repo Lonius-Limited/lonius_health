@@ -70,7 +70,6 @@ frappe.ui.form.on('Pharmacy Prescription', {
 			},
 			callback: function (r) {
 				if (!r.exc) {
-					// code snippet
 					r.message = "Company" ? frm.doc.is_insurance_patient = 1 : frm.doc.is_insurance_patient = 0
 					refresh_field("is_insurance_patient")
 				}
@@ -83,8 +82,6 @@ frappe.ui.form.on('Pharmacy Prescription', {
 frappe.ui.form.on('Pharmacy Prescription Item', {
 	refresh(frm) {
 		frm.get_field("prescription_items").grid.cannot_add_rows = true;
-
-
 	},
 	prescription_items_add: (frm) => {
 
@@ -100,13 +97,6 @@ frappe.ui.form.on('Pharmacy Prescription Item', {
 			refresh_field("prescription_items")
 			refreshTotals(frm)
 		}
-		// if(row.qty && row.maximum_prescription_quantity){
-		// 	console.log(row.qty , row.maximum_prescription_quantity);
-		// 	if (parseFloat(row.qty) > parseFloat(row.maximum_prescription_quantity)){
-
-		// 		frappe.throw(`Sorry, prescription exceeds maximum prescription qusntity of ${parseFloat(row.maximum_prescription_quantity)}`)
-		// 	}
-		// }
 	},
 	rate(frm, cdt, cdn) {
 		const row = locals[cdt][cdn]
@@ -119,17 +109,13 @@ frappe.ui.form.on('Pharmacy Prescription Item', {
 			refresh_field("prescription_items")
 			refreshTotals(frm)
 		}
-		// if(row.qty && row.maximum_prescription_quantity){
-		// 	console.log(row.qty , row.maximum_prescription_quantity);
-		// 	if (parseFloat(row.qty) > parseFloat(row.maximum_prescription_quantity)){
-		// 		frappe.throw(`Sorry, prescription exceeds maximum prescription qusntity of ${parseFloat(row.maximum_prescription_quantity)}`)
-		// 	}
-		// }
 	}
 })
 function changePayerDialog(frm) {
 	frappe.call({
 		method: "lonius_health.api.patients.get_payers_linked_to_patient",
+		freeze: true,
+		freeze_message: "Please wait as we fetch applicable Payers for patient",
 		args: {
 			patient: frm.doc.patient
 		}
@@ -151,13 +137,9 @@ function changePayerDialog(frm) {
 			}
 		}, (values) => {
 			console.log(values);
-			// frm.doc.customer = values.payer
 			frm.set_value({
 				customer: values.payer,
-				//description: 'New description'
 			})
-			// refresh_field('customer')
-			// frm.dirty()
 			frm.save()
 			frappe.msgprint("Payer Changed Successfully", values.payer)
 		})
@@ -167,24 +149,60 @@ function changePayerDialog(frm) {
 }
 function drugAlternativeDialog(frm) {
 	let data = frm.get_selected().prescription_items
-
 	if (!data || data == null || data == undefined) {
 		frappe.throw("You have not selected any items")
 	}
 	let selected = frm.doc.prescription_items.filter(row => { return row.name == data })[0]
-
 	if (data.length > 1) {
 		frappe.throw("Sorry, you can work with only one(1) item at a time.")
 	}
 
-	frappe.msgprint(`You have selected ${data} ${JSON.stringify(data.length)}`)
+	// frappe.msgprint(`You have selected ${data} ${JSON.stringify(selected)}`)
+	// let route =
+	let filters = [
+		["Item Alternative", "item_code", "IN", [selected.drug_code]],
+		["Item Alternative", "alternative_item_code", "IN", [selected.drug_code]]
+	]
+	
+	let d = new frappe.ui.Dialog({
+		title: 'Drug Alternative Search',
+		fields: [
+			{
+				fieldname: 'html_title',
+				options: `<p>You will find alternatives for <em>${selected.drug_name}</em> if it is setup in Item Alternative DocType <hr><strong>NB: There might be slight price changes.</strong>`,
+				fieldtype: 'HTML'
+			},
+			{
+				label: 'Alternative Drug',
+				fieldname: 'last_name',
+				fieldtype: 'Link',
+				reqd: 1,
+				options: 'Item Alternative',
+				get_query: () => {
+					return {
+						or_filters:
+							filters
+					};
+				}
+			}
+		],
+		primary_action_label: 'Submit',
+		primary_action(values) {
+			console.log(values);//
+			d.hide();
+			//Go to DB, fetch rate of alternative and replace on this table.
+		}
+	});
+
+	d.show();
+
 }
 
-{/* <input type="checkbox" class="grid-row-check pull-left"></input> */ }
+// {/* <input type="checkbox" class="grid-row-check pull-left"></input> */ }
 
 function dispensePrescription(frm) {
 	// 6609
-	frappe.warn('Are you sure to post the Items to the invoice?',
+	frappe.warn('Are you sure to post the Items to the invoice ?',
 		`There are ${frm.doc.prescription_items.length} items to be dispensed`,
 		() => {
 			// action to perform if Continue is selected
@@ -201,10 +219,15 @@ function postPrescription(frm) {
 	frappe.call({
 		method: "lonius_health.api.patients.dispense_prescription_slip",
 		freeze: true,
-		freeze_message:"Posting invoice...Please Wait",
+		freeze_message: "Posting invoice...Please Wait",
 		args: {
 			docname: frm.doc.name
 		}
+	}).then(result => {
+		frappe.msgprint("Prescription dispensed successfully.")
+		// frm.set('status', 'Prescription Serviced')
+		frm.reload_doc()
+		frm.refresh();
 	})
 }
 

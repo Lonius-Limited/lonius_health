@@ -88,6 +88,25 @@ app_license = "MIT"
 # Document Events
 # ---------------
 # Hook on document methods and events
+# OVERWRITE LAB TEST TEMPLATE FUNCTIONS
+from erpnext.healthcare.doctype.lab_test_template.lab_test_template import (
+    LabTestTemplate as _labTestTemplate,
+)
+from lonius_health.api.lab_tests import (
+	lab_test_template_on_save as _lab_test_template_on_save,
+	lab_test_template_price_exists as _lab_test_template_price_exists
+)
+_labTestTemplate.on_update = _lab_test_template_on_save
+_labTestTemplate.item_price_exists = _lab_test_template_price_exists
+
+# OVERWRITE CLINICAL PROCEDURE TEMPLATE FUNCTIONS
+from erpnext.healthcare.doctype.clinical_procedure_template.clinical_procedure_template import (
+    ClinicalProcedureTemplate as _clinicalProcedureTemplate,
+)
+from lonius_health.api.procedures import (
+	procedure_template_after_insert as _procedure_template_after_insert
+)
+_clinicalProcedureTemplate.after_insert = _procedure_template_after_insert
 
 doc_events = {
 	"Patient Encounter": {
@@ -96,14 +115,22 @@ doc_events = {
 		"before_save": ["lonius_health.api.encounter.update_queue_state"]
 	},
 	"Lab Test":{
-		"on_submit":["lonius_health.api.invoices.append_lab_invoice"]
+		"on_submit": ["lonius_health.api.invoices.append_lab_invoice"]
 	},
 	"Clinical Procedure": {
-		"on_submit":["lonius_health.api.invoices.append_procedure_invoice"]
+		"on_submit": ["lonius_health.api.invoices.append_procedure_invoice"]
 	},
 	"Vital Signs": {
 		"on_submit": ["lonius_health.api.encounter.vitals_submitted_update_encounter"]
-	}
+	},
+	# "Lab Test Template": {
+	# 	"before_insert" : ["lonius_health.api.lab_tests.create_item_from_template"],
+	# 	"after_insert" : ["lonius_health.api.lab_tests.match_templatename_with_testname"]
+	# },
+	# "Clinical Procedure Template": {
+	# 	# "before_insert" : ["lonius_health.api.procedures.match_templatename_with_testname"],
+	# 	"after_insert" : ["lonius_health.api.procedures.match_templatename_with_testname"]
+	# }
 
 }
 
