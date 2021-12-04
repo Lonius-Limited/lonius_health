@@ -23,6 +23,7 @@ frappe.ui.form.on('Pharmacy Prescription', {
 			});
 			frm.add_custom_button(__("Dispense Prescription"), function () {
 				//perform desired action such as routing to new form or fetching etc.
+				frm.save()
 				dispensePrescription(frm)
 			});
 			// frm.fields_dict['prescription_items'].grid.add_custom_button('Add Drug', () => { addDrug(frm) }, 'primary')
@@ -93,23 +94,40 @@ frappe.ui.form.on('Pharmacy Prescription Item', {
 	prescription_items_add: (frm) => {
 
 	},
-	period:(frm,cdt,cdn)=>{
+	prescription_items_remove: (frm) => {
+		refreshTotals(frm)
+	},
+	period: (frm, cdt, cdn) => {
 		const row = locals[cdt][cdn]
 		console.log(row.dosage);
-		if(!row.dosage){
+		if (!row.dosage) {
 			frappe.throw("Sorry, you have to provide Dosage first! i.e 1-1-1,1-0-1 etc")
 		}
 		// let qty = frappe.get_doc("Drug Prescription",row.drug_code).get_quantity()
-
-		console.log(row.period);
+// UPDATE `tabProcurement Plan` set docstatus=2 where name = 'PROC-CEOs OFFICE - MTRH-2021-2022-108312-2';
+		console.log(row.period, row.interval,frm.doc.patient,frm.doc.customer);
 		frappe.call({
 			method: "lonius_health.api.patients.get_prescription_qty",
-			args:{
+			freeze:true,
+			freeze_message:"Computing Stock Qty and Fetching Price... Please Wait",
+			args: {
+				patient:frm.doc.patient,
+				customer: frm.doc.customer,
+				warehouse:frm.doc.pharmacy,
 				drug: row.drug_code,
 				dosage: row.dosage,
-				period: row.period
+				period: row.period,
+				interval: row.interval
 			}
-		}).then(res=>console.log(res))
+		}).then(res => {
+			console.log(res)
+			row.qty = res.message[0] || 0
+			row.rate = res.message[1] || 0
+			row.amount = row.rate * row.qty
+			refresh_field("prescription_items")
+			refreshTotals(frm)
+			
+		})
 
 
 	},
