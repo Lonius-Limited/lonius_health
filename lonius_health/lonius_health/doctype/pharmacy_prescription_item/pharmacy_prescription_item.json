@@ -1,0 +1,154 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2021-11-29 22:06:02.734678",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "drug_code",
+  "drug_name",
+  "dosage",
+  "period",
+  "dosage_form",
+  "interval",
+  "interval_uom",
+  "qty",
+  "rate",
+  "amount",
+  "comment",
+  "in_stock",
+  "send_to_invoice",
+  "maximum_prescription_quantity",
+  "prescription_expiry",
+  "reference_type",
+  "reference_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "drug_code",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Drug Code",
+   "options": "Item",
+   "read_only": 1,
+   "read_only_depends_on": "eval:doc.reference_type"
+  },
+  {
+   "fetch_from": "drug_code.item_name",
+   "fieldname": "drug_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Drug Name",
+   "read_only": 1
+  },
+  {
+   "depends_on": "eval:doc.drug_code",
+   "fieldname": "dosage",
+   "fieldtype": "Link",
+   "label": "Dosage",
+   "options": "Prescription Dosage"
+  },
+  {
+   "depends_on": "eval:doc.drug_code",
+   "fieldname": "period",
+   "fieldtype": "Link",
+   "label": "Period",
+   "options": "Prescription Duration"
+  },
+  {
+   "fieldname": "dosage_form",
+   "fieldtype": "Link",
+   "label": "Dosage Form",
+   "options": "Dosage Form",
+   "read_only": 1
+  },
+  {
+   "fieldname": "rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Rate",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount"
+  },
+  {
+   "fieldname": "qty",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Quantity"
+  },
+  {
+   "fieldname": "comment",
+   "fieldtype": "Text",
+   "label": "Comment",
+   "read_only": 1
+  },
+  {
+   "fieldname": "in_stock",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "In Stock",
+   "read_only": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "send_to_invoice",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Send To Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "maximum_prescription_quantity",
+   "fieldtype": "Float",
+   "label": "Maximum Prescription Quantity",
+   "read_only": 1
+  },
+  {
+   "fieldname": "prescription_expiry",
+   "fieldtype": "Date",
+   "label": "Prescription Expiry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reference_type",
+   "fieldtype": "Link",
+   "label": "Reference Type",
+   "options": "DocType",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reference_name",
+   "fieldtype": "Dynamic Link",
+   "label": "Reference Name",
+   "options": "reference_type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "interval",
+   "fieldtype": "Int",
+   "label": "Interval"
+  },
+  {
+   "fieldname": "interval_uom",
+   "fieldtype": "Select",
+   "label": "Interval UOM",
+   "options": "\nDay\nHour"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-12-02 09:40:25.944370",
+ "modified_by": "Administrator",
+ "module": "Lonius Health",
+ "name": "Pharmacy Prescription Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
