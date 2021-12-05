@@ -58,10 +58,12 @@ def check_in(patient, practitioner):
 
 
 def create_draft_vitals_doc(patient):
+    encounter_doc = pending_patient_encounters(patient)
     vital_signs_doc = frappe.get_doc({
         "doctype": "Vital Signs",
         "patient": patient,
-        "status": "Draft"
+        "status": "Draft",
+        "encounter": encounter_doc.get('name')
     })
     vital_signs_doc.run_method('set_missing_values')
     vital_signs_doc.insert()
@@ -142,7 +144,7 @@ def pending_patient_encounters(patient):
         'patient': patient
     })
     if len(patient_encounter) > 0:
-        return True
+        return patient_encounter[0]
     return False
 
 
@@ -251,7 +253,7 @@ def validate_payment(doc, handler=None):
     balance = get_customer_outstanding(doc.get('customer'), COMPANY, True) * -1
     if (doc.get('total') > balance):
         needed_to_proceed = fmt_money(doc.get('total') - balance)
-        balance = fmt_money(balance)
+        balance = fmt_money(balance - (doc.get('total') - (doc.get('total') - balance)))
         currency = get_defaults().get('currency')
         frappe.throw(
             f'The client needs to pay {currency}<b> {needed_to_proceed} </b> in order to proceed with this service. There is only {currency}<b> {balance} </b> available in their account.')
