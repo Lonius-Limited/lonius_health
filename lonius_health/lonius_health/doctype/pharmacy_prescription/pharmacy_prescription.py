@@ -35,7 +35,7 @@ class PharmacyPrescription(Document):
     def validate_drug_availability(self):
         warehouse = self.get("pharmacy")
         for item in self.get("prescription_items"):
-            if not frappe.get_value("Item", item.get("drug_name"),"is_stock_item"):continue
+            if not frappe.get_value("Item", item.get("drug_code"),"is_stock_item"):continue
             ordered_qty = item.get("qty")
             item_code = item.get("drug_code")
             available_stock = get_stock_availability(
@@ -71,7 +71,7 @@ class PharmacyPrescription(Document):
 
     def dispense_stock(self, invoice):
         for x in self.get("prescription_items"):
-            if not frappe.get_value("Item", x.get("drug_name"),"is_stock_item"):continue
+            if not frappe.get_value("Item", x.get("drug_code"),"is_stock_item"):continue
             item, item_group = x.get("drug_code"), frappe.get_value(
                 "Item", x.get("drug_code"), 'item_group')
             expense_account = frappe.get_value("Item Default", dict(parent=item), 'expense_account') or frappe.get_value(
@@ -81,3 +81,5 @@ class PharmacyPrescription(Document):
                        expense_account=expense_account, qty=x.get("qty"), 
                        rate=x.get("rate"), conversion_factor=1, from_warehouse=self.get("pharmacy"), sales_invoice_no=invoice.get("name"))
             make_stock_entry(**frappe._dict(row))
+# import icd10
+# icd10.codes

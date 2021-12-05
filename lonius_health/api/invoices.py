@@ -2,6 +2,7 @@
 import frappe
 import datetime
 from frappe import _, msgprint
+from frappe.utils import flt, get_defaults
 
 # CAN WE PLEASE AVOID HARD CODING ANYTHING! "Lonius Limited"
 COMPANY = frappe.defaults.get_user_default("company")
@@ -58,10 +59,12 @@ def check_in(patient, practitioner):
 
 
 def create_draft_vitals_doc(patient):
+    encounter_doc = pending_patient_encounters(patient)
     vital_signs_doc = frappe.get_doc({
         "doctype": "Vital Signs",
         "patient": patient,
-        "status": "Draft"
+        "status": "Draft",
+        "encounter": encounter_doc.get('name')
     })
     vital_signs_doc.run_method('set_missing_values')
     vital_signs_doc.insert()
@@ -142,7 +145,7 @@ def pending_patient_encounters(patient):
         'patient': patient
     })
     if len(patient_encounter) > 0:
-        return True
+        return patient_encounter[0]
     return False
 
 
@@ -246,13 +249,42 @@ def validate_payment(doc, handler=None):
     if customer_type == 'Company':
         return
     from erpnext.selling.doctype.customer.customer import get_customer_outstanding
-    from frappe.utils import get_defaults
     from frappe.utils.data import fmt_money
     balance = get_customer_outstanding(doc.get('customer'), COMPANY, True) * -1
-    if (doc.get('total') > balance):
+    if (flt(doc.get('total')) > flt(balance)):
         needed_to_proceed = fmt_money(doc.get('total') - balance)
-        balance = fmt_money(balance)
+        balance = fmt_money(balance - (doc.get('total') - (doc.get('total') - balance)))
         currency = get_defaults().get('currency')
+
+        #INSERT DRAFT PAYMENT ENTRY
+        amount = flt(doc.get('total')) - flt(balance)
+        # payment_doc = create_payment_entry(doc.get('customer'), amount)
         frappe.throw(
             f'The client needs to pay {currency}<b> {needed_to_proceed} </b> in order to proceed with this service. There is only {currency}<b> {balance} </b> available in their account.')
     return
+
+def create_payment_entry(customer, amount):
+    currency = get_defaults().get('currency')
+    account = frappe.db.get_values('Mode of Payment Account', {'company': COMPANY, 'parenttype': 'Mode of Payment', 'parent': 'Cash'},['default_account'])[0][0]
+    doc = frappe.get_doc({
+        "doctype": "Payment Entry",
+        "payment_type": 'Receive',
+        "posting_date": datetime.date.today(),
+        "company": COMPANY,
+        'party_type': 'Customer',
+        'party': customer,
+        "currency": "KES",
+        "mode_of_payment": 'Cash',
+        "paid_amount": amount,
+        "received_amount": amount,
+        "custom_remarks ": 1,
+        "target_exchange_rate": 1,
+        "paid_to": account,
+        "paid_to_account_currency": currency
+        #"remarks": remarks,
+        #"reference__doc": ref_doc.get('doctype'),
+        #"reference_name" ref_doc.get()
+    })
+    doc.run_method('set_missing_values')
+    doc.insert()
+    return doc.get('name')

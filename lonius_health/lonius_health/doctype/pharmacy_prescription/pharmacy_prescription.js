@@ -39,6 +39,9 @@ frappe.ui.form.on('Pharmacy Prescription', {
 			// frm.disable_save();
 			frm.add_custom_button(__("Make a Prescription Refill"), function () {
 				//perform desired action such as routing to new form or fetching etc.	
+				if(!frm.doc.encounter){
+					frappe.throw("Operation not permitted for external prescriptions")
+				}
 
 			});
 		}
