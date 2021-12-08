@@ -10,7 +10,7 @@ app_email = "info@lonius.co.ke"
 app_license = "MIT"
 
 
-fixtures = "Medical Code"
+fixtures = ["Medical Code","Medical Code Standard"]
 # Includes in <head>
 # ------------------
 

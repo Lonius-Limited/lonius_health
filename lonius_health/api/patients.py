@@ -217,7 +217,16 @@ def get_prescription_qty(drug, dosage, period, patient=None, customer=None, ware
 		'plc_conversion_rate': 1.0,
 		'conversion_rate': 1.0
 	}
-
+	item_price = 0.0
 	item_details = get_item_details(args)
-	item_price = item_details.price_list_rate or 0.0
-	return qty, item_price
+	if item_details.get("has_pricing_rule"):
+		valuation_rate = item_details.get("valuation_rate") or 0.0
+		margin = item_details.get("margin_rate_or_amount") or 0.0
+		margin_type = item_details.get("margin_type") or ''
+		if margin_type =="Amount":
+			item_price = valuation_rate + margin
+		if margin_type == "Percentage":
+			item_price = (valuation_rate * margin/100) + valuation_rate
+	else:
+		item_price = item_details.price_list_rate or 0.0
+	return qty, item_price,item_details
