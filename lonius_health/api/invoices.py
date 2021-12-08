@@ -5,7 +5,6 @@ from frappe import _, msgprint
 from frappe.utils import flt, get_defaults
 
 # CAN WE PLEASE AVOID HARD CODING ANYTHING! "Lonius Limited"
-COMPANY = frappe.defaults.get_user_default("company")
 
 
 def open_invoice_exists(patient):
@@ -75,12 +74,13 @@ def create_draft_vitals_doc(patient):
 def start_patient_visit(patient, customer):
     consultation_item = frappe.get_doc('Healthcare Settings')
     consultation_item = consultation_item.op_consulting_charge_item
+    company = frappe.defaults.get_user_default("company")
     if not open_invoice_exists(patient=patient):
         invoice = frappe.get_doc({
             "doctype": "Sales Invoice",
             "patient": patient,
             "status": "Draft",
-            "company": COMPANY,
+            "company": company,
             'due_date': datetime.date.today(),
             "currency": "KES",
             "customer": customer
@@ -219,12 +219,13 @@ def append_procedure_invoice(doc, handler=None):
 
 def make_invoice_endpoint(patient='', customer='', items=[]):
     invoice = get_open_invoice(patient, customer=customer)
+    company = frappe.defaults.get_user_default("company")
     if not invoice:
         invoice = frappe.get_doc({
             "doctype": "Sales Invoice",
             "patient": patient,
             "status": "Draft",
-            "company": COMPANY,
+            "company": company,
             'due_date': datetime.date.today(),
             'posting_date': datetime.date.today(),
             "currency": "KES",
@@ -244,13 +245,14 @@ def make_invoice_endpoint(patient='', customer='', items=[]):
 
 def validate_payment(doc, handler=None):
     # IF CUSTOMER IS OF TYPE COMPANY, THEN RETURN AS WE WILL ACCEPT INVOICING. IF NOT, THERE BETTER BE MONEY FIRST.
+    company = frappe.defaults.get_user_default("company")
     customer_type = frappe.db.get_value(
         "Customer", doc.get('customer'), 'customer_type')
     if customer_type == 'Company':
         return
     from erpnext.selling.doctype.customer.customer import get_customer_outstanding
     from frappe.utils.data import fmt_money
-    balance = get_customer_outstanding(doc.get('customer'), COMPANY, True) * -1
+    balance = get_customer_outstanding(doc.get('customer'), company, True) * -1
     if (flt(doc.get('total')) > flt(balance)):
         needed_to_proceed = fmt_money(doc.get('total') - balance)
         balance = fmt_money(balance - (doc.get('total') - (doc.get('total') - balance)))
@@ -264,13 +266,14 @@ def validate_payment(doc, handler=None):
     return
 
 def create_payment_entry(customer, amount):
+    company = frappe.defaults.get_user_default("company")
     currency = get_defaults().get('currency')
-    account = frappe.db.get_values('Mode of Payment Account', {'company': COMPANY, 'parenttype': 'Mode of Payment', 'parent': 'Cash'},['default_account'])[0][0]
+    account = frappe.db.get_values('Mode of Payment Account', {'company': company, 'parenttype': 'Mode of Payment', 'parent': 'Cash'},['default_account'])[0][0]
     doc = frappe.get_doc({
         "doctype": "Payment Entry",
         "payment_type": 'Receive',
         "posting_date": datetime.date.today(),
-        "company": COMPANY,
+        "company": company,
         'party_type': 'Customer',
         'party': customer,
         "currency": "KES",
