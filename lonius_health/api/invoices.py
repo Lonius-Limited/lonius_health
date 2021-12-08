@@ -177,7 +177,7 @@ def append_lab_invoice(doc, handler=None):
     invoice = get_open_invoice(doc.patient)
     if invoice:
         invoice.append('items', {
-            "item_code": doc.lab_test_name,
+            "item_code": doc.template,
             "qty": 1
         })
         invoice.run_method('set_missing_values')
@@ -185,7 +185,7 @@ def append_lab_invoice(doc, handler=None):
     else:
         # FOR WHATEVER REASON, THERE IS NO INVOICE. LETS BILL THE PATIENT
         lab_items = [{
-            "item_code": doc.lab_test_name,
+            "item_code": doc.template,
             "qty": 1
         }]
         customer = frappe.db.get_value('Patient', doc.patient, 'customer')

@@ -41,6 +41,13 @@ def lab_test_template_on_save(self):
     elif not self.is_billable and self.item:
         frappe.db.set_value('Item', self.item, 'disabled', 1)
 
+    #SYNCHRONIZE ITEM AND LAB IF THERE IS A NAMING SERIES FOR ITEMS. ITEM CODE AND LAB TEMPLATE CODE HAVE TO BE THE SAME
+    if frappe.db.exists({'doctype': 'Item', 'item_code': self.lab_test_code}):
+        rename_doc('Item', self.lab_test_code, self.name, ignore_permissions=True)
+        frappe.db.set_value('Item', self.lab_test_code, 'item_name', self.lab_test_name)
+    else:
+        rename_doc('Item', self.item, self.name, ignore_permissions=True)
+        frappe.db.set_value('Item', self.name, 'item_name', self.lab_test_name)
     self.reload()
 
 def make_item_price(item, price_list_name, item_price):
