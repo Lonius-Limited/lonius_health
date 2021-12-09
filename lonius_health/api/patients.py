@@ -204,15 +204,18 @@ def dispense_prescription_slip(docname):
 def get_prescription_qty(drug, dosage, period, patient=None, customer=None, warehouse=None, interval=None):
 	qty_args = dict(doctype='Drug Prescription', drug_code=drug,
 				dosage=dosage, period=period, interval=interval or 1)
+	customer_group = frappe.get_value("Customer",customer,'customer_group') or "All Customer Groups" #Edge Cases to be figured out later
 
+	customer_price_list = frappe.get_value('Customer',customer, 'default_price_list') or frappe.get_value('Customer Group',customer_group, 'default_price_list')  or  price_list
 	qty = frappe.get_doc(qty_args).get_quantity()
+	# frappe.msgprint(f" it is{customer_price_list}")
 	args = {
 		'doctype': 'Sales Invoice',
 		'item_code': drug,
 		'company': frappe.defaults.get_user_default("Company"),
 		'warehouse': warehouse,
 		'customer': customer,
-		'selling_price_list': price_list,
+		'selling_price_list': customer_price_list,
 		'price_list_currency': price_list_currency,
 		'plc_conversion_rate': 1.0,
 		'conversion_rate': 1.0
