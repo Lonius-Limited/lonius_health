@@ -5,6 +5,7 @@ import frappe
 from frappe.model.document import Document
 from erpnext.accounts.doctype.pos_invoice.pos_invoice import get_stock_availability
 from erpnext.stock.doctype.stock_entry.stock_entry_utils import make_stock_entry
+from erpnext.stock.get_item_details import get_item_details,get_valuation_rate
 
 
 class PharmacyPrescription(Document):
@@ -77,9 +78,12 @@ class PharmacyPrescription(Document):
             expense_account = frappe.get_value("Item Default", dict(parent=item), 'expense_account') or frappe.get_value(
                 "Item Default", dict(parent=item_group), 'expense_account')
             company = frappe.defaults.get_user_default("company")
+            valuation_rate = self.get_valuation_rate(item,company,self.get("pharmacy"))
             row = dict(company=company, item_code=item,
                        expense_account=expense_account, qty=x.get("qty"), 
-                       rate=x.get("rate"), conversion_factor=1, from_warehouse=self.get("pharmacy"), sales_invoice_no=invoice.get("name"))
+                       rate=valuation_rate, conversion_factor=1, from_warehouse=self.get("pharmacy"), sales_invoice_no=invoice.get("name"))
             make_stock_entry(**frappe._dict(row))
+    def get_valuation_rate(self, item, warehouse, company):
+        return get_valuation_rate(item, company, warehouse=warehouse).get("valuation_rate") or 0.0
 # import icd10
 # icd10.codes
