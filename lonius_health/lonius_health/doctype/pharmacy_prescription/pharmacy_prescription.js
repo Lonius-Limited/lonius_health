@@ -4,14 +4,14 @@
 frappe.ui.form.on('Pharmacy Prescription', {
 
 	refresh: (frm) => {
-		if (!frm.is_new()) {
-			frm.disable_save();
-		}
+		// if (!frm.is_new()) {
+		// 	frm.disable_save();
+		// }
 
 		if (frm.doc.encounter) {//DISABLE ADDING DRUGS FOR ENCOUNTER PRESCRIPTIONS
-			frm.get_field("prescription_items").grid.cannot_add_rows = true;
-			frm.get_field("prescription_items").grid.only_sortable();
-			refresh_field('prescription_items')
+			// frm.get_field("prescription_items").grid.cannot_add_rows = true;
+			// frm.get_field("prescription_items").grid.only_sortable();
+			// refresh_field('prescription_items')
 		}
 		// frm.get_field("prescription_items").grid.only_sortable();
 
@@ -55,10 +55,10 @@ frappe.ui.form.on('Pharmacy Prescription', {
 	warehouse: (frm) => {
 
 	},
-	prescription_items: (frm) => {
-		frm.refresh_field("prescription_items")
+	// prescription_items: (frm) => {
+	// 	frm.refresh_field("prescription_items")
 
-	},
+	// },
 	customer: (frm) => {
 		// frappe.freeze()
 		let customer = frm.doc.customer
