@@ -1,0 +1,177 @@
+{
+	"Claim": {
+		"Claim_Header": {
+			"Invoice_Number": "8974",
+			"Claim_Date": "2020-06-08",
+			"Claim_Time": "05:52:00",
+			"Pool_Number": "2",
+			"Total_Services": "6",
+			"Gross_Amount": "3406.00"
+		},
+		"Provider": {
+			"Role": "SP",
+			"Country_Code": "KEN",
+			"Group_Practice_Number": "SKSP_1304",
+			"Group_Practice_Name": "Bondo Medical Centre "
+		},
+		"Authorization": {
+			"Pre_Authorization_Number": "12",
+			"Pre_Authorization_Amount": "0"
+		},
+		"Payment_Modifiers": {
+			"Payment_Modifier": {
+				"Type": "1",
+				"Amount": "0",
+				"Receipt": "0"
+			}
+		},
+		"Member": {
+			"Membership_Number": "SAMPLE151-01",
+			"Scheme_Code": "MPS",
+			"Scheme_Plan": "MPS.B"
+		},
+		"Patient": {
+			"Dependant": "PRINCIPAL",
+			"First_Name": "DANIEL",
+			"Middle_Name": "ODONGO",
+			"Surname": "ODHIAMBO",
+			"Date_Of_Birth": "1980-12-04",
+			"Gender": "MALE"
+		},
+		"Claim_Data": {
+			"Service": [{
+					"Number": "1",
+					"Invoice_Number": "8974",
+					"Global_Invoice_Nr": "8974",
+					"Start_Date": "2020-06-08",
+					"Start_Time": "07:02",
+					"Provider": {
+						"Role": "DP",
+						"Practice_Number": "SKSP_1304"
+					},
+					"Diagnosis": {
+						"Stage": "P",
+						"Code_Type": "ICD-10",
+						"Code": "K34.1"
+					},
+					"Encounter_Type": "Consultation ",
+					"Code_Type": "SNOMED",
+					"Code": "CONS030",
+					"Code_Description": "Consultation CIC",
+					"Quantity": "1.0",
+					"Total_Amount": "1000.000000000"
+				},
+				{
+					"Number": "2",
+					"Invoice_Number": "8974",
+					"Global_Invoice_Nr": "8974",
+					"Start_Date": "2020-06-08",
+					"Start_Time": "07:02",
+					"Provider": {
+						"Role": "DP",
+						"Practice_Number": "SKSP_1304"
+					},
+					"Diagnosis": {
+						"Stage": "P",
+						"Code_Type": "ICD-10",
+						"Code": "K34.1"
+					},
+					"Encounter_Type": "Laboratory ",
+					"Code_Type": "SNOMED",
+					"Code": "LAB026",
+					"Code_Description": "Urinalysis",
+					"Quantity": "1.0",
+					"Total_Amount": "400.000000000"
+				},
+				{
+					"Number": "3",
+					"Invoice_Number": "8974",
+					"Global_Invoice_Nr": "8974",
+					"Start_Date": "2020-06-08",
+					"Start_Time": "07:02",
+					"Provider": {
+						"Role": "DP",
+						"Practice_Number": "SKSP_1304"
+					},
+					"Diagnosis": {
+						"Stage": "P",
+						"Code_Type": "ICD-10",
+						"Code": "K34.1"
+					},
+					"Encounter_Type": "Pharmacy ",
+					"Code_Type": "SNOMED",
+					"Code": "BMC079",
+					"Code_Description": "Fopyn (PCM/ Cod./ Caff./ Doxyl.) - Coral/ Signature tabs 450/10/30/5 mg per oral",
+					"Quantity": "10.0",
+					"Total_Amount": "250.000000000"
+				},
+				{
+					"Number": "4",
+					"Invoice_Number": "8974",
+					"Global_Invoice_Nr": "8974",
+					"Start_Date": "2020-06-08",
+					"Start_Time": "07:02",
+					"Provider": {
+						"Role": "DP",
+						"Practice_Number": "SKSP_1304"
+					},
+					"Diagnosis": {
+						"Stage": "P",
+						"Code_Type": "ICD-10",
+						"Code": "K34.1"
+					},
+					"Encounter_Type": "Pharmacy ",
+					"Code_Type": "SNOMED",
+					"Code": "BMC611",
+					"Code_Description": "Tinidazole (Tzex) 4's - Zest tabs 500mg per oral",
+					"Quantity": "12.0",
+					"Total_Amount": "96.000000000"
+				},
+				{
+					"Number": "5",
+					"Invoice_Number": "8974",
+					"Global_Invoice_Nr": "8974",
+					"Start_Date": "2020-06-08",
+					"Start_Time": "07:02",
+					"Provider": {
+						"Role": "DP",
+						"Practice_Number": "SKSP_1304"
+					},
+					"Diagnosis": {
+						"Stage": "P",
+						"Code_Type": "ICD-10",
+						"Code": "K34.1"
+					},
+					"Encounter_Type": "Pharmacy ",
+					"Code_Type": "SNOMED",
+					"Code": "BMC057",
+					"Code_Description": "Amoxyclavulin ( KOACT ) - Aurobindo tabs 625mg per oral",
+					"Quantity": "15.0",
+					"Total_Amount": "630.000000000"
+				},
+				{
+					"Number": "6",
+					"Invoice_Number": "8974",
+					"Global_Invoice_Nr": "8974",
+					"Start_Date": "2020-06-08",
+					"Start_Time": "07:02",
+					"Provider": {
+						"Role": "DP",
+						"Practice_Number": "SKSP_1304"
+					},
+					"Diagnosis": {
+						"Stage": "P",
+						"Code_Type": "ICD-10",
+						"Code": "K34.1"
+					},
+					"Encounter_Type": "Pharmacy ",
+					"Code_Type": "SNOMED",
+					"Code": "BMC1405",
+					"Code_Description": "Cefuroxime Injection , Combo Pack (Kefstar ) - Wockhardt injection 750mg intramuscular/intravenous",
+					"Quantity": "2.0",
+					"Total_Amount": "1030.000000000"
+				}
+			]
+		}
+	}
+}

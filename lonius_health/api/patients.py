@@ -145,13 +145,17 @@ def submit_enc():
 
 
 def make_prescription(doc, state):
+	from lonius_health.api.invoices import get_open_invoice
 	if doc.get("drug_prescription"):
 		patient = doc.get("patient")
+		draft_invoice = get_open_invoice(patient)#Check for any Draft Invoice to be used in this prescription
 		customer = frappe.get_value("Patient", patient, 'customer')
+		if draft_invoice:
+			customer = draft_invoice.get("name")
 		customer_type = frappe.get_value("Customer", customer, 'customer_type')
 		is_insurance_patient = 1 if customer_type == 'Company' else 0
 		args = dict(doctype="Pharmacy Prescription", patient=patient,
-					customer=customer, encounter=doc.get("name"))
+					customer=customer, encounter=doc.get("name"),is_insurance_patient=is_insurance_patient)
 
 		prescription_doc = frappe.get_doc(args)
 		warehouse_available_for_user = get_allocated_warehouses(
@@ -222,7 +226,10 @@ def get_prescription_qty(drug, dosage, period, patient=None, customer=None, ware
 	}
 	item_price = 0.0
 	item_details = get_item_details(args)
-	if item_details.get("has_pricing_rule"):
+	###
+	if item_details.get("price_list_rate"):
+		item_price = item_details.price_list_rate or 0.0
+	else:
 		valuation_rate = item_details.get("valuation_rate") or 0.0
 		margin = item_details.get("margin_rate_or_amount") or 0.0
 		margin_type = item_details.get("margin_type") or ''
@@ -230,6 +237,15 @@ def get_prescription_qty(drug, dosage, period, patient=None, customer=None, ware
 			item_price = valuation_rate + margin
 		if margin_type == "Percentage":
 			item_price = (valuation_rate * margin/100) + valuation_rate
-	else:
-		item_price = item_details.price_list_rate or 0.0
+	#####
+	# if item_details.get("has_pricing_rule"):
+	# 	valuation_rate = item_details.get("valuation_rate") or 0.0
+	# 	margin = item_details.get("margin_rate_or_amount") or 0.0
+	# 	margin_type = item_details.get("margin_type") or ''
+	# 	if margin_type =="Amount":
+	# 		item_price = valuation_rate + margin
+	# 	if margin_type == "Percentage":
+	# 		item_price = (valuation_rate * margin/100) + valuation_rate
+	# else:
+	# 	item_price = item_details.price_list_rate or 0.0
 	return qty, item_price,item_details
