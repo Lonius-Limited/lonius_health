@@ -83,7 +83,8 @@ def start_patient_visit(patient, customer):
             "company": company,
             'due_date': datetime.date.today(),
             "currency": "KES",
-            "customer": customer
+            "customer": customer,
+            "allocate_advances_automatically": 1
         })
         invoice.append('items', {
             "item_code": consultation_item,
@@ -229,7 +230,8 @@ def make_invoice_endpoint(patient='', customer='', items=[]):
             'due_date': datetime.date.today(),
             'posting_date': datetime.date.today(),
             "currency": "KES",
-            "customer": customer
+            "customer": customer,
+            "allocate_advances_automatically": 1
         })
         for item in items:
             invoice.append('items', item)
