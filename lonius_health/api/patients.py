@@ -227,7 +227,7 @@ def get_prescription_qty(drug, dosage, period, patient=None, customer=None, ware
 	item_price = 0.0
 	item_details = get_item_details(args)
 	###
-	if item_details.get("price_list_rate"):
+	if item_details.get("price_list_rate") and frappe.get_value("Item Price", dict(item_code=drug, price_list=customer_price_list,is_priority_rate=1)):
 		item_price = item_details.price_list_rate or 0.0
 	else:
 		valuation_rate = item_details.get("valuation_rate") or 0.0
