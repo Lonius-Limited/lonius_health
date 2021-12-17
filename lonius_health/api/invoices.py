@@ -305,10 +305,10 @@ def close_patient_invoices():
 	'''
 	:param acceptable_expiry: Integer value of the acceptable expiry of an invoice
 	:param acceptable_expiry_uom: String value of the unit of measure to measure expiry of an invoice; Can be days,hours or weeks
-	
+
 	'''
 	# We can get this from a settings doctype
-	acceptable_expiry, acceptable_expiry_uom = 24,'hours'
+	acceptable_expiry, acceptable_expiry_uom = 24, 'hours'
 	#######################################################
 	
 	kwargs ={acceptable_expiry_uom:acceptable_expiry}
