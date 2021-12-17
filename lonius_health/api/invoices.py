@@ -301,20 +301,24 @@ def create_payment_entry(customer, amount):
 	doc.insert()
 	return doc.get('name')
 def close_patient_invoices():
-	# Syntax for UOM : datetime.timedelta(days=0, hours=0, weeks=0)
+	# Syntax for UOM : datetime.timedelta(days, hours, weeks) All Lower case
 	'''
 	:param acceptable_expiry: Integer value of the acceptable expiry of an invoice
 	:param acceptable_expiry_uom: String value of the unit of measure to measure expiry of an invoice; Can be days,hours or weeks
+
 	'''
 	# We can get this from a settings doctype
-	acceptable_expiry, acceptable_expiry_uom = 1,'days'
+	acceptable_expiry, acceptable_expiry_uom = 24, 'hours'
 	#######################################################
+	
 	kwargs ={acceptable_expiry_uom:acceptable_expiry}
 	now_datetime = datetime.now()
 	expiry_datetime = now_datetime - timedelta(**kwargs)
 	overdue_drafts = frappe.get_all("Sales Invoice",filters=dict(docstatus=0,posting_date=["<",expiry_datetime]))
 	if not overdue_drafts: return
 	def _close_invoice(doc):
+		#####Do not close if patient has Inpatient Record with Status ["Admission Scheduled","Admitted","Discharge Scheduled"]
+		if frappe.get_all("Inpatient Record",filters=dict(patient=doc.patient,status=["IN",["Admission Scheduled","Admitted","Discharge Scheduled"]])): return
 		doc.set('allocate_advances_automatically', 1)
 		# if getdate(due_date) < getdate(posting_date):
 		doc.set('posting_date', date.today())
