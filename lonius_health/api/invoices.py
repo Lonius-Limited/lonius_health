@@ -4,7 +4,7 @@ import datetime
 from frappe import _, msgprint
 from frappe.utils import flt, get_defaults
 from frappe.utils.data import now_datetime
-from datetime import datetime, timedelta, date
+
 import lonius_health
 # CAN WE PLEASE AVOID HARD CODING ANYTHING! "Lonius Limited"
 
@@ -301,6 +301,7 @@ def create_payment_entry(customer, amount):
 	doc.insert()
 	return doc.get('name')
 def close_patient_invoices():
+	from datetime import datetime, timedelta, date
 	# Syntax for UOM : datetime.timedelta(days, hours, weeks) All Lower case
 	'''
 	:param acceptable_expiry: Integer value of the acceptable expiry of an invoice
