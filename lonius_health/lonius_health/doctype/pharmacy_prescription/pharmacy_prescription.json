@@ -19,7 +19,7 @@
   "prescription_items",
   "total_invoice_amount",
   "section_break_12",
-  "status",
+  "prescription_status",
   "amended_from"
  ],
  "fields": [
@@ -71,13 +71,6 @@
    "read_only": 1
   },
   {
-   "default": "Prescription Ready",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Prescription Ready\nPending Payment\nPrescription Serviced"
-  },
-  {
    "fetch_from": "patient.patient_name",
    "fieldname": "patient_name",
    "fieldtype": "Data",
@@ -110,12 +103,19 @@
    "options": "Pharmacy Prescription",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "default": "Prescription Ready",
+   "fieldname": "prescription_status",
+   "fieldtype": "Select",
+   "label": "Prescription Status",
+   "options": "Prescription Ready\nPending Payment\nPrescription Serviced"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-02-13 00:15:13.064780",
+ "modified": "2022-02-13 15:18:41.564432",
  "modified_by": "Administrator",
  "module": "Lonius Health",
  "name": "Pharmacy Prescription",
