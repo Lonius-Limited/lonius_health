@@ -19,7 +19,8 @@
   "prescription_items",
   "total_invoice_amount",
   "section_break_12",
-  "status"
+  "status",
+  "amended_from"
  ],
  "fields": [
   {
@@ -100,11 +101,21 @@
    "fieldtype": "Link",
    "label": "Pharmacy",
    "options": "Warehouse"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Pharmacy Prescription",
+   "print_hide": 1,
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2021-12-02 00:51:32.260921",
+ "modified": "2022-02-13 00:15:13.064780",
  "modified_by": "Administrator",
  "module": "Lonius Health",
  "name": "Pharmacy Prescription",
