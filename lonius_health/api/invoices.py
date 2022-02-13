@@ -254,6 +254,10 @@ def validate_payment(doc, handler=None, ignore_zero_balance=False):
 		"Customer", doc.get('customer'), 'customer_type')
 	if customer_type == 'Company':
 		return
+	# ONLY PROCEED IF THIS CUSTOMER IS ASSOCIATED WITH A PATIENT FILE. NEEDED TO PREVENT INTERFERENCE WITH INVOICES FROM OTHER APPS
+	patient_count = frappe.db.count('Patient', {'customer': doc.get('customer')})
+	if patient_count == 0: return
+	
 	from erpnext.selling.doctype.customer.customer import get_customer_outstanding
 	from frappe.utils.data import fmt_money
 	balance = get_customer_outstanding(doc.get('customer'), company, True) * -1

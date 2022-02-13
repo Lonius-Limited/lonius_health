@@ -275,6 +275,8 @@ function postPrescription(frm) {
 		frappe.msgprint("Prescription dispensed successfully.")
 		// frm.set('status', 'Prescription Serviced')
 		frm.reload_doc()
+		frm.dirty()
+		frm.save('submit')
 		frm.refresh();
 	})
 }

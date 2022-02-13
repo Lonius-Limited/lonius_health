@@ -151,7 +151,7 @@ def make_prescription(doc, state):
 		draft_invoice = get_open_invoice(patient)#Check for any Draft Invoice to be used in this prescription
 		customer = frappe.get_value("Patient", patient, 'customer')
 		if draft_invoice:
-			customer = draft_invoice.get("name")
+			customer = draft_invoice.get("customer")
 		customer_type = frappe.get_value("Customer", customer, 'customer_type')
 		is_insurance_patient = 1 if customer_type == 'Company' else 0
 		args = dict(doctype="Pharmacy Prescription", patient=patient,
@@ -207,7 +207,7 @@ def dispense_prescription_slip(docname):
 @frappe.whitelist()
 def get_prescription_qty(drug, dosage, period, patient=None, customer=None, warehouse=None, interval=None):
 	qty_args = dict(doctype='Drug Prescription', drug_code=drug,
-				dosage=dosage, period=period, interval=interval or 1)
+				dosage=dosage, period=period, interval=int(interval) or 1)
 	customer_group = frappe.get_value("Customer",customer,'customer_group') or "All Customer Groups" #Edge Cases to be figured out later
 
 	customer_price_list = frappe.get_value('Customer',customer, 'default_price_list') or frappe.get_value('Customer Group',customer_group, 'default_price_list')  or  price_list
