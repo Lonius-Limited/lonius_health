@@ -207,7 +207,7 @@ def dispense_prescription_slip(docname):
 @frappe.whitelist()
 def get_prescription_qty(drug, dosage, period, patient=None, customer=None, warehouse=None, interval=None):
 	qty_args = dict(doctype='Drug Prescription', drug_code=drug,
-				dosage=dosage, period=period, interval=int(interval) or 1)
+				dosage=dosage, period=period, interval=int(interval or 1))
 	customer_group = frappe.get_value("Customer",customer,'customer_group') or "All Customer Groups" #Edge Cases to be figured out later
 
 	customer_price_list = frappe.get_value('Customer',customer, 'default_price_list') or frappe.get_value('Customer Group',customer_group, 'default_price_list')  or  price_list
@@ -246,6 +246,6 @@ def get_prescription_qty(drug, dosage, period, patient=None, customer=None, ware
 	# 		item_price = valuation_rate + margin
 	# 	if margin_type == "Percentage":
 	# 		item_price = (valuation_rate * margin/100) + valuation_rate
-	# else:
-	# 	item_price = item_details.price_list_rate or 0.0
+	if not item_price: #Just take whatever is provided even though it might not be priority
+		item_price = item_details.price_list_rate or 0.0
 	return qty, item_price,item_details
