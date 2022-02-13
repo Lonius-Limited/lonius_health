@@ -21,11 +21,11 @@ frappe.ui.form.on('Pharmacy Prescription', {
 				//perform desired action such as routing to new form or fetching etc.
 				changePayerDialog(frm)
 			});
-			frm.add_custom_button(__("Dispense Prescription"), function () {
-				//perform desired action such as routing to new form or fetching etc.
-				frm.save()
-				dispensePrescription(frm)
-			});
+			// frm.add_custom_button(__("Dispense Prescription"), function () {
+			// 	//perform desired action such as routing to new form or fetching etc.
+			// 	frm.save()
+			// 	dispensePrescription(frm)
+			// });
 			// frm.fields_dict['prescription_items'].grid.add_custom_button('Add Drug', () => { addDrug(frm) }, 'primary')
 			frm.fields_dict['prescription_items'].grid.add_custom_button('Check Alternatives for Selected Drug', () => { drugAlternativeDialog(frm) }, 'primary')
 
@@ -37,10 +37,11 @@ frappe.ui.form.on('Pharmacy Prescription', {
 		if (frm.doc.status == 'Prescription Serviced') {
 			frm.set_intro('This prescription has already been serviced. Please Click <strong>Make a Prescription Refill</strong> to dispense/bill remaining quantities.');
 			// frm.disable_save();
+			frm.remove_custom_button(__("Change Payer"))
 			frm.add_custom_button(__("Make a Prescription Refill"), function () {
 				//perform desired action such as routing to new form or fetching etc.	
 				if(!frm.doc.encounter){
-					frappe.throw("Operation not permitted for external prescriptions")
+					// frappe.throw("Operation not permitted for external prescriptions")
 				}
 
 			});

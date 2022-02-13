@@ -11,6 +11,7 @@ from lonius_health.api.patients import get_prescription_qty
 
 class PharmacyPrescription(Document):
 	def before_submit(self):
+		self.refresh_prices()
 		self.dispense_prescription()
 	def dispense_prescription(self):
 		# pass
@@ -20,6 +21,8 @@ class PharmacyPrescription(Document):
 		invoice = self.post_invoice()
 		self.dispense_stock(invoice)
 	def before_save(self):
+		self.refresh_prices()
+	def refresh_prices(self):
 		for row in self.get("prescription_items"):
 			kwargs = {
 				"patient":self.get("patient"),
@@ -34,6 +37,7 @@ class PharmacyPrescription(Document):
 			row.qty = res[0] or 0
 			row.rate = res[1] or 0
 			row.amount = row.rate * row.qty
+		self.compute_totals()
 			# frappe.msgprint("{}".format(res))
 	def compute_totals(self):
 		total = 0.0
@@ -48,7 +52,7 @@ class PharmacyPrescription(Document):
 			if item.get("qty") > item.get("maximum_prescription_quantity"):
 				default_uom = frappe.get_value(
 					"Item", item.get("drug_code"), 'stock_uom')
-				frappe.throw("<p>{0} has exceeded maximum prescription of {1} {2}. Please rectify this.</p><p>If you need to dispense a new prescription, please submit a new encounter.</p>".format(
+				frappe.throw("<p>{0} has exceeded maximum prescription of {1} {2}. Please rectify this.</p><p>If you need to dispense a new prescription, please submit a new document.</p>".format(
 					item.get("drug_name"), item.get("maximum_prescription_quantity"), default_uom))
 
 	def validate_drug_availability(self):
