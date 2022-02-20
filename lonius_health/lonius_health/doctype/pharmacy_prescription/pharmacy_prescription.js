@@ -15,7 +15,7 @@ frappe.ui.form.on('Pharmacy Prescription', {
 		}
 		// frm.get_field("prescription_items").grid.only_sortable();
 
-		if (frm.doc.status == 'Prescription Ready') {
+		if (frm.doc.prescription_status == 'Prescription Ready') {
 			frm.remove_custom_button(__("Make a Prescription Refill"))
 			frm.add_custom_button(__("Change Payer"), function () {
 				//perform desired action such as routing to new form or fetching etc.
@@ -34,7 +34,7 @@ frappe.ui.form.on('Pharmacy Prescription', {
 
 			// }
 		}
-		if (frm.doc.status == 'Prescription Serviced') {
+		if (frm.doc.prescription_status == 'Prescription Serviced') {
 			frm.set_intro('This prescription has already been serviced. Please Click <strong>Make a Prescription Refill</strong> to dispense/bill remaining quantities.');
 			// frm.disable_save();
 			frm.remove_custom_button(__("Change Payer"))
