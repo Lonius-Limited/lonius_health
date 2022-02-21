@@ -11,10 +11,10 @@ app_license = "MIT"
 
 
 # fixtures = [d"Medical Code","Medical Code Standard"]
-after_migrate = [
-	"lonius_health.api.invoices.close_patient_invoices",
-	"lonius_health.after_migrate_functions.icd10.upload"
-]
+# after_migrate = [
+# 	"lonius_health.api.invoices.close_patient_invoices",
+# 	"lonius_health.after_migrate_functions.icd10.upload"
+# ]
 # Includes in <head>
 # ------------------
 
