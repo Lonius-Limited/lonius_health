@@ -25,6 +25,7 @@ def upload():
         ###MEDICINE
         if len(args.get("strength")) > 139: continue
         if len(args.get("medicine_name")) > 139: continue
+        if len(args.get("dosage_form")) > 139: continue
         if not frappe.get_value("Dosage Form",args.get("dosage_form")) and args.get("dosage_form"):
             frappe.get_doc(dict(doctype="Dosage Form",dosage_form=args.get("dosage_form"))).insert()
         ####CLASSIFICATION
