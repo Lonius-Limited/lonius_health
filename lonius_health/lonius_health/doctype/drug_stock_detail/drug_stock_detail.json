@@ -31,7 +31,6 @@
    "read_only": 1
   },
   {
-   "fetch_from": "item.stock_uom",
    "fieldname": "uom",
    "fieldtype": "Link",
    "label": "UOM",
@@ -65,7 +64,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2022-02-21 17:06:26.335003",
+ "modified": "2022-02-22 17:36:48.065432",
  "modified_by": "Administrator",
  "module": "Lonius Health",
  "name": "Drug Stock Detail",

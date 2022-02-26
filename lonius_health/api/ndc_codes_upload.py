@@ -19,7 +19,7 @@ def upload():
     frappe.db.sql("DELETE FROM `tabDrug`")
     frappe.db.sql("DELETE FROM `tabDrug Stock Detail`")
     frappe.db.sql("DELETE FROM `tabDrug Classification`")
-    frappe.db.sql("DELETE FROM `tabDosage Form` WHERE name!='Per Oral'")
+    # frappe.db.sql("DELETE FROM `tabDosage Form` WHERE name!='Per Oral'")
     frappe.db.commit()
     for args in ALL_CODES:
         ###MEDICINE
