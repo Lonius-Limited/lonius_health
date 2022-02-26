@@ -5011,3 +5011,6 @@ def keml():
             }
         ]
     }
+
+#bench new-site osh.lonius.co.ke --admin-password 'velo@2020' --mariadb-root-username erpuser --mariadb-root-password 'velo@2020'
+
