@@ -221,6 +221,7 @@ def append_procedure_invoice(doc, handler=None):
 
 
 def make_invoice_endpoint(patient='', customer='', items=[]):
+	# frappe.throw('2099-01-01')
 	invoice = get_open_invoice(patient, customer=customer)
 	company = frappe.defaults.get_user_default("company")
 	if not invoice:
@@ -229,7 +230,7 @@ def make_invoice_endpoint(patient='', customer='', items=[]):
 			"patient": patient,
 			"status": "Draft",
 			"company": company,
-			'due_date': datetime.date.today(),
+			'due_date': '2099-01-01',
 			'posting_date': datetime.date.today(),
 			"currency": "KES",
 			"customer": customer,
@@ -242,6 +243,8 @@ def make_invoice_endpoint(patient='', customer='', items=[]):
 		return invoice
 	for item in items:
 		invoice.append('items', item)
+	invoice.set('due_date','2099-01-01')
+	invoice.set('payment_schedule',[])
 	invoice.run_method('set_missing_values')
 	invoice.save()
 	return invoice
