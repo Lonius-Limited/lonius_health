@@ -273,13 +273,19 @@ def validate_payment(doc, handler=None, ignore_zero_balance=False):
 		# INSERT DRAFT PAYMENT ENTRY
 		amount = flt(doc.get('total')) - flt(balance)
 		# payment_doc = create_payment_entry(doc.get('customer'), amount)
+		link_to_latest_p_entr = None if "Accounts User" not in frappe.get_roles(frappe.session.user) else get_link_to_latest_p_entr(doc.get("customer"),float(needed_to_proceed.replace(",","")))
 		message = f'The client needs to pay {currency}<b> {needed_to_proceed} </b> in order to proceed with this service. There is only {currency}<b> {balance} </b> available in their account.'
 		print(doc.ignore_customer_balance_check)
 		if doc.ignore_customer_balance_check==1:
 			frappe.msgprint(message)
 			return
+		if link_to_latest_p_entr: frappe.msgprint(link_to_latest_p_entr)
 		frappe.throw(message)
 	return
+def get_link_to_latest_p_entr(customer, amount):
+	latest = frappe.get_value("Payment Entry",dict(party=customer,party_type="Customer",paid_amount=amount,docstatus="Draft"),'name') or create_payment_entry(customer, amount)
+	if latest:
+		return f"<a target='_blank' href='/app/payment-entry/{latest}'>Click here to submit a payment of {amount} before proceeding :Ref:{latest}</a>"
 
 def create_payment_entry(customer, amount):
 	company = frappe.defaults.get_user_default("company")
@@ -306,6 +312,7 @@ def create_payment_entry(customer, amount):
 	})
 	doc.run_method('set_missing_values')
 	doc.insert()
+	frappe.db.commit()
 	return doc.get('name')
 def close_patient_invoices():
 	from datetime import datetime, timedelta, date
