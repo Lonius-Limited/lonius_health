@@ -432,7 +432,7 @@ def validate_insurance_limit(doc):  # SALES INVOICE
 
     if limit < doc.get('total'):
         difference = doc.get('total') - limit
-        # frappe.throw("Sorry, this invoice amount <b style='color:red'>{}</b> exceeded the insurance limit of <b style='color:green'>{}</b> for <b>{}</b>\nAs such please determine alternative ways to invoice the excess amount of <b style='color:blue'>{}</b>.".format(frappe.format(doc.get('total'),'Currency'),frappe.format(limit,'Currency'),insurance, frappe.format(difference,'Currency')))
+        frappe.throw("Sorry, this invoice amount <b style='color:red'>{}</b> exceeded the insurance limit of <b style='color:green'>{}</b> for <b>{}</b>\nAs such please determine alternative ways to invoice the excess amount of <b style='color:blue'>{}</b>.".format(frappe.format(doc.get('total'),'Currency'),frappe.format(limit,'Currency'),insurance, frappe.format(difference,'Currency')))
 #         row_idxs = [x for x in range(len(doc.get('items')))]  # [0,1,2,3]
 #         items = []
 #         cummulative = 0.0
