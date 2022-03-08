@@ -122,16 +122,16 @@ doc_events = {
 		"before_submit": ["lonius_health.api.encounter.update_queue_state"]
 	},
 	"Lab Test" : {
-		"on_submit": ["lonius_health.api.invoices.append_lab_invoice"]
+		"before_submit": ["lonius_health.api.invoices.append_lab_invoice"]
 	},
 	"Clinical Procedure" : {
-		"on_submit" : ["lonius_health.api.invoices.append_procedure_invoice"]
+		"before_submit" : ["lonius_health.api.invoices.append_procedure_invoice"]
 	},
 	"Vital Signs" : {
-		"on_submit" : ["lonius_health.api.encounter.vitals_submitted_update_encounter"]
+		"before_submit" : ["lonius_health.api.encounter.vitals_submitted_update_encounter"]
 	},
 	"Sales Invoice" : {
-		"on_update" : ["lonius_health.api.invoices.validate_payment"]
+		"before_save" : ["lonius_health.api.invoices.validate_payment"]
 	}
 	# "Lab Test Template": {
 	# 	"before_insert" : ["lonius_health.api.lab_tests.create_item_from_template"],
