@@ -398,9 +398,22 @@ def get_insurance_limit(patient, insurance=None):
 	#####
 	invoice_amount = frappe.db.get_value("Sales Invoice", dict(
 		docstatus=0, patient=patient, customer=insurance), 'total') or 0.0
+	balance = 0.00#TBD
+	# bench get-app https://github.com/yrestom/POS-Awesome.git
+	###########################
+	#####START INSURANCE LIMIT
+	limits = frappe.get_value("Patient Insurance", dict(parent=patient, insurance_name=insurance), [
+							  'outpatient_limit', 'inpatient_limit'], as_dict=1)
 
+	if not limits:
+		limits = dict(outpatient_limit=0.0, inpatient_limit=0.0)
+	limit = limits.get('outpatient_limit') or 0.0 if not frappe.get_value('Inpatient Record', dict(patient=patient, status=[
+		'IN', ['Admission Scheduled', 'Admitted', 'Discharge Scheduled']])) else limits.get('inpatient_limit') or 0.0
 	# if not insurance return '<h3>No insurance found.</h3>'
-	return invoice_amount or 0.0, valid_insurance_details or []
+	balance = limit - invoice_amount
+
+	####################END INSURANCE LIMIT
+	return invoice_amount or 0.0, valid_insurance_details or [], balance or 0.0
 
 
 @frappe.whitelist()
