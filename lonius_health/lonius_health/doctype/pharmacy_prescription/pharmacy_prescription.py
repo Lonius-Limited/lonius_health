@@ -37,7 +37,7 @@ class PharmacyPrescription(Document):
                 "interval": row.interval or 1
             }
             res = get_prescription_qty(**kwargs)
-            row.qty = res[0] or 0
+            if row.qty == 0: row.qty = res[0] or 0
             row.rate = res[1] or 0
             row.amount = row.rate * row.qty
         self.compute_totals()
