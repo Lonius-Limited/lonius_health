@@ -1,0 +1,70 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2021-11-25 23:25:42.038265",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "insurance_name",
+  "member_number",
+  "outpatient_limit",
+  "outpatient_balance",
+  "inpatient_limit",
+  "inpatient_balance"
+ ],
+ "fields": [
+  {
+   "fieldname": "insurance_name",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Insurance Name",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "member_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Member Number",
+   "mandatory_depends_on": "insurance_name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "outpatient_limit",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Outpatient Limit",
+   "reqd": 1
+  },
+  {
+   "fieldname": "outpatient_balance",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Outpatient Balance"
+  },
+  {
+   "fieldname": "inpatient_limit",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Inpatient Limit"
+  },
+  {
+   "fieldname": "inpatient_balance",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Inpatient Balance"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-03-08 11:18:46.310629",
+ "modified_by": "Administrator",
+ "module": "Lonius Health",
+ "name": "Patient Insurance",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

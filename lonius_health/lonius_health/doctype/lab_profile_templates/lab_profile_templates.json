@@ -1,0 +1,31 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2021-11-30 12:06:07.932592",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "lab_test"
+ ],
+ "fields": [
+  {
+   "fieldname": "lab_test",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Lab Test",
+   "options": "Lab Test Template"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2021-11-30 12:10:25.517630",
+ "modified_by": "Administrator",
+ "module": "Lonius Health",
+ "name": "Lab Profile Templates",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
