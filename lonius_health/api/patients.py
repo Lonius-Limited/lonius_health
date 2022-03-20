@@ -19,9 +19,6 @@ from frappe.utils import (
 import datetime
 from erpnext.stock.get_item_details import get_item_details
 
-price_list, price_list_currency = frappe.db.get_values(
-	'Price List', {'selling': 1}, ['name', 'currency'])[0]
-
 
 @frappe.whitelist()
 def get_pending_encounter_prescriptions(warehouse=None):
@@ -100,6 +97,7 @@ def get_link_to_form_new_tab(doctype, name, label=None):
 def encounter_has_drugs(encounter, patient=None, warehouse=None):
 	prescription = frappe.get_all(
 		"Drug Prescription", filters=dict(parent=encounter), fields=["*"])
+	price_list, price_list_currency = frappe.db.get_values('Price List', {'selling': 1}, ['name', 'currency'])[0]
 	drugs = []
 	for drug in prescription:
 		row = frappe._dict(drug)
@@ -108,13 +106,15 @@ def encounter_has_drugs(encounter, patient=None, warehouse=None):
 		row["qty"] = qty
 		if patient and warehouse:
 			customer = frappe.get_value("Patient", patient, 'customer')
+			customer_group = frappe.get_value("Customer",customer,'customer_group') or "All Customer Groups" #Edge Cases to be figured out later
+			customer_price_list = frappe.get_value('Customer',customer, 'default_price_list') or frappe.get_value('Customer Group',customer_group, 'default_price_list')  or  price_list
 			args = {
 				'doctype': 'Sales Invoice',
 				'item_code': drug.get("drug_code"),
 				'company': frappe.defaults.get_user_default("Company"),
 				'warehouse': warehouse,
 				'customer': customer,
-				'selling_price_list': price_list,
+				'selling_price_list': customer_price_list,
 				'price_list_currency': price_list_currency,
 				'plc_conversion_rate': 1.0,
 				'conversion_rate': 1.0
@@ -213,6 +213,7 @@ def get_prescription_qty(drug, dosage, period, patient=None, customer=None, ware
 	customer_price_list = frappe.get_value('Customer',customer, 'default_price_list') or frappe.get_value('Customer Group',customer_group, 'default_price_list')  or  price_list
 	qty = frappe.get_doc(qty_args).get_quantity()
 	# frappe.msgprint(f" it is{customer_price_list}")
+	price_list, price_list_currency = frappe.db.get_values('Price List', {'selling': 1}, ['name', 'currency'])[0]
 	args = {
 		'doctype': 'Sales Invoice',
 		'item_code': drug,
