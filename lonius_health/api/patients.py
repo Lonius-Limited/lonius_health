@@ -106,13 +106,15 @@ def encounter_has_drugs(encounter, patient=None, warehouse=None):
 		row["qty"] = qty
 		if patient and warehouse:
 			customer = frappe.get_value("Patient", patient, 'customer')
+			customer_group = frappe.get_value("Customer",customer,'customer_group') or "All Customer Groups" #Edge Cases to be figured out later
+			customer_price_list = frappe.get_value('Customer',customer, 'default_price_list') or frappe.get_value('Customer Group',customer_group, 'default_price_list')  or  price_list
 			args = {
 				'doctype': 'Sales Invoice',
 				'item_code': drug.get("drug_code"),
 				'company': frappe.defaults.get_user_default("Company"),
 				'warehouse': warehouse,
 				'customer': customer,
-				'selling_price_list': price_list,
+				'selling_price_list': customer_price_list,
 				'price_list_currency': price_list_currency,
 				'plc_conversion_rate': 1.0,
 				'conversion_rate': 1.0
