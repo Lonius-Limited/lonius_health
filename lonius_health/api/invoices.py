@@ -415,13 +415,20 @@ def get_insurance_limit(patient, insurance=None):
 	####################END INSURANCE LIMIT
 	return invoice_amount or 0.0, valid_insurance_details or [], balance or 0.0
 
-
+#bench new-site ivyliam.com --admin-password 'velo@2020' --mariadb-root-username erpuser --mariadb-root-password 'velo@2020'
 @frappe.whitelist()
 def get_insurance_limit_html(patient, insurance=None):
 	deets = get_insurance_limit(patient, insurance=None)
 	payload = "<div>"
-	payload += "<h3>Total invoiced amount(This visit):</h3><h5 style='color:green'>{}</h5>".format(
-		frappe.format(deets[0] or 0.0, "Currency"))
+	# payload += "<h3>Total invoiced amount(This visit):</h3><h5 style='color:green'>{}</h5>".format(
+	# 	frappe.format(deets[0] or 0.0, "Currency"))
+
+	payload += "<h3>Scheme Balance(This visit):</h3><h5 style='color:blue'>{}</h5>".format(
+		frappe.format(deets[2] or 0.0, "Currency"))
+	if deets[2] <= 0.0 or not deets[2]:
+		payload += "<p style='color:orange'><em>The insurance limit is exceeded already, please note that the excess bills will be invoiced to the individual. </em></p>".format(
+		frappe.format(deets[2] or 0.0, "Currency"))
+
 
 	if not deets[1]:
 		payload += "<h4><em>No invoices have been posted to patient's insurance</em></h4>"
@@ -441,12 +448,13 @@ def validate_insurance_limit(doc):  # SALES INVOICE
 		return  # Works for patients only
 	limits = frappe.get_value("Patient Insurance", dict(parent=patient, insurance_name=insurance), [
 							  'outpatient_limit', 'inpatient_limit'], as_dict=1)
-
+	#bench update --patch
 	if not limits:
 		limits = dict(outpatient_limit=0.0, inpatient_limit=0.0)
 	limit = limits.get('outpatient_limit') or 0.0 if not frappe.get_value('Inpatient Record', dict(patient=patient, status=[
 		'IN', ['Admission Scheduled', 'Admitted', 'Discharge Scheduled']])) else limits.get('inpatient_limit') or 0.0
 	# this_invoice_total = get_draft_invoice_total(doc)
+	# bench drop-site ivyliam.com --db-root-username erpuser --db-root-password velo@2020 --no-backup
 	if limit < doc.get('total'):
 		difference = doc.get('total') - limit
 		frappe.msgprint("Sorry, this invoice amount <b style='color:red'>{}</b> exceeded the insurance limit of <b style='color:green'>{}</b> for <b>{}</b>\nAs such please determine alternative ways to invoice the excess amount of <b style='color:blue'>{}</b>.".format(frappe.format(doc.get('total'),'Currency'),frappe.format(limit,'Currency'),insurance, frappe.format(difference,'Currency')))

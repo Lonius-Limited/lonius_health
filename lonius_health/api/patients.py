@@ -250,3 +250,27 @@ def get_prescription_qty(drug, dosage, period, patient=None, customer=None, ware
 	if not item_price: #Just take whatever is provided even though it might not be priority
 		item_price = item_details.price_list_rate or 0.0
 	return qty, item_price,item_details
+@frappe.whitelist()
+def get_latest_vitals(patient=None):
+	latest_vitals = frappe.get_all("Vital Signs",filters=dict(patient=patient),fields=["*"],order_by='creation desc',page_length=1)
+	if not latest_vitals: return '<h4><em>No vitals found on patient record</em></h4>'
+	vitals = latest_vitals[0]
+	time   = "{} {}".format(str(vitals.get('signs_date')),str(vitals.get('signs_time')))
+	return '''
+	<p><em>Taken on {} by {} </em></p>
+	<p>
+		Temp: (Degree celcius) <i class="fa fa-thermometer-full" style="color: green" aria-hidden="true"></i>{} 
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		Pulse: <i class="fa fa-heartbeat-full" style="color: green" aria-hidden="true"></i>{}
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		Blood Pressure: <i class="fa fa-heartbeat-full" style="color: green" aria-hidden="true"></i>{}/{}
+	</p>
+	<p>Notes: {} </p>'''.format(
+		time,
+		vitals.get('modified_by'),
+		vitals.get('temperature') or 'Not recorded',
+		vitals.get('pulse') or 'Not recorded',
+		vitals.get('bp_systolic') or 'Not Recorded',
+		vitals.get('bp_diastolic'), 
+		vitals.get('vital_signs_note') or '-'
+	)
