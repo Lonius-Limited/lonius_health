@@ -259,13 +259,13 @@ def get_latest_vitals(patient=None):
 	return '''
 	<p><em>Taken on {} by {} </em></p>
 	<p>
-		Temp: (Degree celcius) <i class="fa fa-thermometer-full" style="color: green" aria-hidden="true"></i>{} 
+		<b>Temp</b>: (Degree celcius) <i class="fa fa-thermometer-full" style="color: green" aria-hidden="true"></i> {} 
 		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		Pulse: <i class="fa fa-heartbeat-full" style="color: green" aria-hidden="true"></i>{}
+		<b>Pulse</b>: <i class="fa fa-heartbeat-full" style="color: green" aria-hidden="true"></i>{}
 		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		Blood Pressure: <i class="fa fa-heartbeat-full" style="color: green" aria-hidden="true"></i>{}/{}
+		<b>Blood Pressure</b>: <i class="fa fa-heartbeat-full" style="color: green" aria-hidden="true"></i>{}/{}
 	</p>
-	<p>Notes: {} </p>'''.format(
+	<p><b>Notes</b>: {} </p>'''.format(
 		time,
 		vitals.get('modified_by'),
 		vitals.get('temperature') or 'Not recorded',
