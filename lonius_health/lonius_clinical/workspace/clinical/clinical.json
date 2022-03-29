@@ -1,0 +1,77 @@
+{
+ "category": "Modules",
+ "charts": [],
+ "creation": "2022-03-28 23:55:22.140934",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "extends_another_page": 0,
+ "hide_custom": 0,
+ "icon": "health1",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "label": "Clinical",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Patients",
+   "link_to": "Patient",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2022-03-29 21:55:38.193598",
+ "modified_by": "Administrator",
+ "module": "Lonius Clinical",
+ "name": "Clinical",
+ "owner": "Administrator",
+ "pin_to_bottom": 0,
+ "pin_to_top": 1,
+ "shortcuts": [
+  {
+   "color": "#449CF0",
+   "doc_view": "",
+   "label": "Patient List",
+   "link_to": "Patient",
+   "stats_filter": "{\n    \"status\": \"Active\"\n}",
+   "type": "DocType"
+  },
+  {
+   "color": "#ECAD4B",
+   "doc_view": "",
+   "label": "Appointments",
+   "link_to": "Patient Appointment",
+   "stats_filter": "{\n    \"status\": \"Open\",\n    \"company\": [\"like\", '%' + frappe.defaults.get_global_default(\"company\") + '%']\n}",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Appointment Analytics",
+   "link_to": "Patient Appointment Analytics",
+   "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Visits",
+   "link_to": "Patient Encounter",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Inpatients",
+   "link_to": "Inpatient Record",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Patient History",
+   "link_to": "patient_history",
+   "type": "Page"
+  }
+ ],
+ "shortcuts_label": "Clinical Shortcuts"
+}
