@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:medicine_name",
+ "creation": "2022-02-14 16:51:51.841049",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "medicine_name",
+  "drug_classification",
+  "default_dosage_form",
+  "strength",
+  "drug_stock_detail"
+ ],
+ "fields": [
+  {
+   "fieldname": "medicine_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Medicine Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "drug_classification",
+   "fieldtype": "Link",
+   "label": "Drug Classification",
+   "options": "Drug Classification"
+  },
+  {
+   "fieldname": "default_dosage_form",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Default Dosage Form",
+   "options": "Dosage Form"
+  },
+  {
+   "fieldname": "strength",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Strength / Size"
+  },
+  {
+   "fieldname": "drug_stock_detail",
+   "fieldtype": "Table",
+   "label": "Drug Stock Detail",
+   "options": "Drug Stock Detail"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2022-03-31 22:27:09.479245",
+ "modified_by": "Administrator",
+ "module": "Lonius Pharmacy",
+ "name": "Drug",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

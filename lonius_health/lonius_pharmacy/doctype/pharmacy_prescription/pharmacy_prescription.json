@@ -1,0 +1,168 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:PRESC-{#####}",
+ "creation": "2021-11-29 22:06:27.760325",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "pharmacy",
+  "section_break_2",
+  "patient",
+  "patient_name",
+  "customer",
+  "column_break_5",
+  "is_insurance_patient",
+  "encounter",
+  "section_break_7",
+  "prescription_items",
+  "total_invoice_amount",
+  "section_break_12",
+  "prescription_status",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "pharmacy",
+   "fieldtype": "Link",
+   "label": "Pharmacy",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "patient",
+   "fieldtype": "Link",
+   "label": "Patient",
+   "options": "Patient"
+  },
+  {
+   "fetch_from": "patient.patient_name",
+   "fieldname": "patient_name",
+   "fieldtype": "Data",
+   "label": "Patient Name",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "patient.customer",
+   "fetch_if_empty": 1,
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_insurance_patient",
+   "fieldtype": "Check",
+   "label": "Is Insurance Patient"
+  },
+  {
+   "fieldname": "encounter",
+   "fieldtype": "Link",
+   "label": "Encounter",
+   "options": "Patient Encounter"
+  },
+  {
+   "fieldname": "section_break_7",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "prescription_items",
+   "fieldtype": "Table",
+   "label": "Prescription Items",
+   "options": "Pharmacy Prescription Item"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "total_invoice_amount",
+   "fieldtype": "Currency",
+   "label": "Total Invoice Amount",
+   "read_only": 1
+  },
+  {
+   "collapsible": 1,
+   "depends_on": "eval:frappe.session.user=='Administrator'",
+   "fieldname": "section_break_12",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "Prescription Ready",
+   "fieldname": "prescription_status",
+   "fieldtype": "Select",
+   "label": "Prescription Status",
+   "options": "Prescription Ready\nPending Payment\nPrescription Serviced"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Pharmacy Prescription",
+   "print_hide": 1,
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2022-03-31 22:25:57.788398",
+ "modified_by": "Administrator",
+ "module": "Lonius Pharmacy",
+ "name": "Pharmacy Prescription",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Stock User",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
