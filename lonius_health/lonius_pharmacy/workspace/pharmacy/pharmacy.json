@@ -1,0 +1,105 @@
+{
+ "category": "Modules",
+ "charts": [],
+ "creation": "2022-03-31 22:39:00.223143",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "extends_another_page": 0,
+ "hide_custom": 0,
+ "icon": "health-portion",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "label": "Pharmacy",
+ "links": [],
+ "modified": "2022-03-31 22:43:44.737955",
+ "modified_by": "Administrator",
+ "module": "Lonius Pharmacy",
+ "name": "Pharmacy",
+ "owner": "Administrator",
+ "pin_to_bottom": 0,
+ "pin_to_top": 1,
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Prescriptions",
+   "link_to": "Pharmacy Prescription",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Reconcilliation",
+   "link_to": "Stock Reconciliation",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Invoices",
+   "link_to": "Sales Invoice",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Stock Requests",
+   "link_to": "Material Request",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "GRNs",
+   "link_to": "Purchase Receipt",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Transfers/Issuing",
+   "link_to": "Stock Entry",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Inpatient Orders",
+   "link_to": "Inpatient Medication Order",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Item Prices",
+   "link_to": "Item Price",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Stock Ledger",
+   "link_to": "Stock Ledger",
+   "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Stock Balance",
+   "link_to": "Stock Balance",
+   "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Projected Quantities",
+   "link_to": "Stock Projected Qty",
+   "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Stock Analytics",
+   "link_to": "Stock Analytics",
+   "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Stock Summary",
+   "link_to": "Total Stock Summary",
+   "type": "Report"
+  }
+ ],
+ "shortcuts_label": "Pharmacy"
+}

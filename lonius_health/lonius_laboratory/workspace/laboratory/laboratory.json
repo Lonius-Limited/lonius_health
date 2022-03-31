@@ -1,0 +1,69 @@
+{
+ "category": "Modules",
+ "charts": [],
+ "creation": "2022-03-31 22:52:10.462017",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "extends_another_page": 0,
+ "hide_custom": 0,
+ "icon": "health-microscope",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "label": "Laboratory",
+ "links": [],
+ "modified": "2022-03-31 22:52:46.133214",
+ "modified_by": "Administrator",
+ "module": "Lonius Laboratory",
+ "name": "Laboratory",
+ "owner": "Administrator",
+ "pin_to_bottom": 0,
+ "pin_to_top": 1,
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Lab Test",
+   "link_to": "Lab Test",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Samples",
+   "link_to": "Lab Test Sample",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Lab Unit of Measures",
+   "link_to": "Lab Test UOM",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Templates",
+   "link_to": "Lab Test Template",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Lab Test Report",
+   "link_to": "Lab Test Report",
+   "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Lab Stocks",
+   "link_to": "Stock Balance",
+   "type": "Report"
+  },
+  {
+   "doc_view": "",
+   "label": "Stocks Requests",
+   "link_to": "Material Request",
+   "type": "DocType"
+  }
+ ],
+ "shortcuts_label": "Laboratory"
+}
