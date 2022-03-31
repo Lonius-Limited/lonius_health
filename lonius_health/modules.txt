@@ -1,3 +1,7 @@
 Lonius Health
 Lonius Clinical
 Lonius Nursing
+Lonius Pharmacy
+Lonius Laboratory
+Lonius Radiology
+Lonius Administration

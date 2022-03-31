@@ -24,7 +24,7 @@
    "type": "Link"
   }
  ],
- "modified": "2022-03-29 21:55:38.193598",
+ "modified": "2022-03-31 22:44:37.562068",
  "modified_by": "Administrator",
  "module": "Lonius Clinical",
  "name": "Clinical",
@@ -73,5 +73,5 @@
    "type": "Page"
   }
  ],
- "shortcuts_label": "Clinical Shortcuts"
+ "shortcuts_label": "Clinical"
 }
