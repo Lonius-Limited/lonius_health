@@ -2,6 +2,7 @@ frappe.ui.form.on('Patient Encounter', {
 	refresh(frm) {
 	    if(!frm.is_new()){ 
 	       updateSchemeDashboardpe(frm)
+           quickVitalsEncounter(frm)
 	   }
 	    if(frm.doc.docstatus==1){
     	    frm.add_custom_button(__("Review Patient"), function(){
@@ -133,6 +134,21 @@ function updateSchemeDashboardpe(frm){
         args:{
             "patient":frm.doc.patient,
             // "insurance": frm.doc.customer
+        }
+    }).then(r=>{
+        console.log(r)
+        frm.dashboard.add_section(r.message);
+        frm.dashboard.show();
+    })
+}
+
+function quickVitalsEncounter(frm){
+    //Pass
+    let patient = frm.doc.patient
+    frappe.call({
+        method:"lonius_health.api.patients.get_latest_vitals",
+        args:{
+            "patient":patient
         }
     }).then(r=>{
         console.log(r)
