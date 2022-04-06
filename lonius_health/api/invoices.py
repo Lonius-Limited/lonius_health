@@ -429,9 +429,11 @@ def get_insurance_limit_html(patient, insurance=None):
 
 	payload += "<h3>Scheme Balance(This visit):</h3><h5 style='color:blue'>{}</h5>".format(
 		frappe.format(deets[2] or 0.0, "Currency"))
-	if deets[2] <= 0.0 or not deets[2]:
+	if deets[2] < 0.0:
 		payload += "<p style='color:orange'><em>The insurance limit is exceeded already, please note that the excess bills will be invoiced to the individual. </em></p>".format(
 		frappe.format(deets[2] or 0.0, "Currency"))
+	# if deets[2]==0.00 or not deets[2]:
+	# 	payload += "<p style='color:orange'><em>The insurance limit is not set up or Not Applicable, please note that the excess bills will be invoiced to the individual. </em></p>"
 
 
 	if not deets[1]:

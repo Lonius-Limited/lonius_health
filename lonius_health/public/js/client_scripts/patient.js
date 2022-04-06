@@ -9,13 +9,13 @@ frappe.ui.form.on('Patient', {
         }
     },
 	refresh(frm) {
-        if(!frm.is_new()){ 
-            // frappe.throw(frm.doc.name+" ->")  
-            let pt = frm.doc.name 
-            frappe.msgprint("Fetching dashboard for "+pt)   
-            updateSchemeDashboardPt(frm, pt)
-            quickVitals(frm)
-        }
+        // if(!frm.is_new()){ 
+        //     // frappe.throw(frm.doc.name+" ->")  
+        //     let pt = frm.doc.name 
+        //     frappe.msgprint("Fetching dashboard for "+pt)   
+        //     updateSchemeDashboardPt(frm, pt)
+        //     quickVitals(frm)
+        // }
         ///////
 		let d = new frappe.ui.Dialog({
             title: 'Provide the following details',
