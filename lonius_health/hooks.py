@@ -20,7 +20,15 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/lonius_health/css/lonius_health.css"
-# app_include_js = "/assets/lonius_health/js/lonius_health.js"
+app_include_js = [
+	"/assets/lonius_health/js/client_scripts/patient.js",
+	"/assets/lonius_health/js/client_scripts/patient_encounter.js",
+	"/assets/lonius_health/js/client_scripts/clinical_procedure.js",
+	"/assets/lonius_health/js/client_scripts/lab_test.js"
+]
+# app_include_js = [
+#     "/assets/js/patient_scripts.min.js",
+# ]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/lonius_health/css/lonius_health.css"
