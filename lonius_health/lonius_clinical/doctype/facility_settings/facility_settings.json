@@ -1,0 +1,166 @@
+{
+ "actions": [],
+ "creation": "2021-11-25 18:09:52.508641",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "general_settings_section",
+  "appointment_reschedule_msg_template",
+  "html_2",
+  "walk_in_settings_section",
+  "healthcare_practitioner_handling_walk_in_appointments",
+  "service_unit_handling_walk_in_orders",
+  "hl7_settings_section",
+  "listener_port",
+  "api_user",
+  "api_key",
+  "api_secret",
+  "column_break_7",
+  "create_api_user",
+  "registration_billing_item",
+  "appointment_billing_item",
+  "registration_healthcare_service_unit",
+  "stock_settings_section",
+  "enforce_item_variants",
+  "laboratory_and_procedures_billing_section",
+  "require_prepayment"
+ ],
+ "fields": [
+  {
+   "fieldname": "general_settings_section",
+   "fieldtype": "Section Break",
+   "label": "General Settings"
+  },
+  {
+   "fieldname": "appointment_reschedule_msg_template",
+   "fieldtype": "Small Text",
+   "label": "Patient Appointment Reschedule Message Template"
+  },
+  {
+   "default": "This document will be used to set facility wide specific settings.",
+   "fieldname": "html_2",
+   "fieldtype": "HTML"
+  },
+  {
+   "fieldname": "walk_in_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Walk In Settings"
+  },
+  {
+   "fieldname": "healthcare_practitioner_handling_walk_in_appointments",
+   "fieldtype": "Link",
+   "label": "Healthcare Practitioner Handling Walk in Appointments",
+   "options": "Healthcare Practitioner"
+  },
+  {
+   "fieldname": "service_unit_handling_walk_in_orders",
+   "fieldtype": "Link",
+   "label": "Service Unit Handling Walk in Orders",
+   "options": "Healthcare Service Unit"
+  },
+  {
+   "fieldname": "hl7_settings_section",
+   "fieldtype": "Section Break",
+   "label": "HL7 Settings"
+  },
+  {
+   "default": "2575",
+   "fieldname": "listener_port",
+   "fieldtype": "Int",
+   "label": "Listener Port"
+  },
+  {
+   "fieldname": "api_user",
+   "fieldtype": "Link",
+   "label": "API User",
+   "options": "User",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "api_user.api_key",
+   "fieldname": "api_key",
+   "fieldtype": "Data",
+   "label": "Api Key"
+  },
+  {
+   "fieldname": "api_secret",
+   "fieldtype": "Data",
+   "label": "Api Secret"
+  },
+  {
+   "fieldname": "column_break_7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:!doc.api_user",
+   "fieldname": "create_api_user",
+   "fieldtype": "Button",
+   "label": "Create Api User"
+  },
+  {
+   "fieldname": "registration_billing_item",
+   "fieldtype": "Link",
+   "label": "Registration Billing Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "appointment_billing_item",
+   "fieldtype": "Link",
+   "label": "Appointment Billing Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "registration_healthcare_service_unit",
+   "fieldtype": "Link",
+   "label": "Registration Healthcare Service Unit",
+   "options": "Healthcare Service Unit"
+  },
+  {
+   "fieldname": "stock_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Stock Settings"
+  },
+  {
+   "default": "0",
+   "fieldname": "enforce_item_variants",
+   "fieldtype": "Check",
+   "label": "Enforce Item Variants"
+  },
+  {
+   "fieldname": "laboratory_and_procedures_billing_section",
+   "fieldtype": "Section Break",
+   "label": "Laboratory and Procedures Billing"
+  },
+  {
+   "default": "0",
+   "description": "If checked, prepayment will be mandatory before submission of a Laboratory Test or Clinical Procedure.",
+   "fieldname": "require_prepayment",
+   "fieldtype": "Check",
+   "label": "Require Prepayment Before Service"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2022-03-29 08:21:32.651693",
+ "modified_by": "Administrator",
+ "module": "Lonius Clinical",
+ "name": "Facility Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

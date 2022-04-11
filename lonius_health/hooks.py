@@ -20,7 +20,15 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/lonius_health/css/lonius_health.css"
-# app_include_js = "/assets/lonius_health/js/lonius_health.js"
+app_include_js = [
+	"/assets/lonius_health/js/client_scripts/patient.js",
+	"/assets/lonius_health/js/client_scripts/patient_encounter.js",
+	"/assets/lonius_health/js/client_scripts/clinical_procedure.js",
+	"/assets/lonius_health/js/client_scripts/lab_test.js"
+]
+# app_include_js = [
+#     "/assets/js/patient_scripts.min.js",
+# ]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/lonius_health/css/lonius_health.css"
@@ -122,7 +130,9 @@ doc_events = {
 		"before_submit": ["lonius_health.api.encounter.update_queue_state"]
 	},
 	"Lab Test" : {
-		"before_submit": ["lonius_health.api.invoices.append_lab_invoice"]
+		"before_submit": ["lonius_health.api.invoices.append_lab_invoice"],
+		"on_submit":["lonius_health.lonius_laboratory.api.lab_test.consolidated_lab_tests"],
+		"on_update_after_submit":["lonius_health.lonius_laboratory.api.lab_test.consolidated_lab_tests"]
 	},
 	"Clinical Procedure" : {
 		"before_submit" : ["lonius_health.api.invoices.append_procedure_invoice"]

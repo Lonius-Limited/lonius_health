@@ -387,6 +387,8 @@ def close_patient_invoices():
 def get_insurance_limit(patient, insurance=None):
 	company_insurances = [x.get("name") for x in frappe.get_all(
 		"Customer", filters=dict(customer_type='Company'), fields=["*"])]
+	if not company_insurances:
+		return None
 	if not insurance:
 		insurance = frappe.db.get_value("Sales Invoice", dict(docstatus=0, patient=patient, customer=[
 										'IN', company_insurances]), 'customer') or ''  # Return Current insurance for the most recent invoice
@@ -419,15 +421,19 @@ def get_insurance_limit(patient, insurance=None):
 @frappe.whitelist()
 def get_insurance_limit_html(patient, insurance=None):
 	deets = get_insurance_limit(patient, insurance=None)
+	if not deets: return
+	
 	payload = "<div>"
 	# payload += "<h3>Total invoiced amount(This visit):</h3><h5 style='color:green'>{}</h5>".format(
 	# 	frappe.format(deets[0] or 0.0, "Currency"))
 
 	payload += "<h3>Scheme Balance(This visit):</h3><h5 style='color:blue'>{}</h5>".format(
 		frappe.format(deets[2] or 0.0, "Currency"))
-	if deets[2] <= 0.0 or not deets[2]:
+	if deets[2] < 0.0:
 		payload += "<p style='color:orange'><em>The insurance limit is exceeded already, please note that the excess bills will be invoiced to the individual. </em></p>".format(
 		frappe.format(deets[2] or 0.0, "Currency"))
+	# if deets[2]==0.00 or not deets[2]:
+	# 	payload += "<p style='color:orange'><em>The insurance limit is not set up or Not Applicable, please note that the excess bills will be invoiced to the individual. </em></p>"
 
 
 	if not deets[1]:

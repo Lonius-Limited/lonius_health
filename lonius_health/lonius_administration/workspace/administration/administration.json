@@ -1,0 +1,135 @@
+{
+ "category": "Modules",
+ "charts": [],
+ "creation": "2022-03-31 23:15:55.956006",
+ "developer_mode_only": 0,
+ "disable_user_customization": 0,
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "extends_another_page": 0,
+ "hide_custom": 0,
+ "icon": "setting-gear",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "label": "Administration",
+ "links": [],
+ "modified": "2022-03-31 23:21:59.685239",
+ "modified_by": "Administrator",
+ "module": "Lonius Administration",
+ "name": "Administration",
+ "owner": "Administrator",
+ "pin_to_bottom": 0,
+ "pin_to_top": 1,
+ "shortcuts": [
+  {
+   "doc_view": "",
+   "label": "Users",
+   "link_to": "User",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Practitioners",
+   "link_to": "Healthcare Practitioner",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Practitioner Schedules",
+   "link_to": "Practitioner Schedule",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Roles",
+   "link_to": "Role",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Role Permissions",
+   "link_to": "permission-manager",
+   "type": "Page"
+  },
+  {
+   "doc_view": "",
+   "label": "Page/Report Access",
+   "link_to": "Role Permission for Page and Report",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Role Profiles",
+   "link_to": "Role Profile",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Module Profiles",
+   "link_to": "Module Profile",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Departments",
+   "link_to": "Department",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Service Units",
+   "link_to": "Healthcare Service Unit",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Warehouses & Pharmacies",
+   "link_to": "Warehouse",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Insurance/Payers",
+   "link_to": "Customer Group",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "General Healthcare Settings",
+   "link_to": "Healthcare Settings",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Naming Formats",
+   "link_to": "Naming Series",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Item Master",
+   "link_to": "Item",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Pricing",
+   "link_to": "Item Price",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Payer Price Lists",
+   "link_to": "Price List",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "label": "Price Rules",
+   "link_to": "Pricing Rule",
+   "type": "DocType"
+  }
+ ],
+ "shortcuts_label": "Healthcare Settings"
+}
