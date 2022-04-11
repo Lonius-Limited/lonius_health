@@ -130,7 +130,9 @@ doc_events = {
 		"before_submit": ["lonius_health.api.encounter.update_queue_state"]
 	},
 	"Lab Test" : {
-		"before_submit": ["lonius_health.api.invoices.append_lab_invoice"]
+		"before_submit": ["lonius_health.api.invoices.append_lab_invoice"],
+		"on_submit":["lonius_health.lonius_laboratory.api.lab_test.consolidated_lab_tests"],
+		"on_update_after_submit":["lonius_health.lonius_laboratory.api.lab_test.consolidated_lab_tests"]
 	},
 	"Clinical Procedure" : {
 		"before_submit" : ["lonius_health.api.invoices.append_procedure_invoice"]
