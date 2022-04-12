@@ -272,7 +272,7 @@ def validate_payment(doc, handler=None, ignore_zero_balance=False):
 	company = frappe.defaults.get_user_default("company")
 	customer_type = frappe.db.get_value(
 		"Customer", doc.get('customer'), 'customer_type')
-	if customer_type == 'Company' && doc.get('generated_by') == 'Lonius Health':
+	if customer_type == 'Company' and doc.get('generated_by') == 'Lonius Health':
 		validate_insurance_limit(doc)
 		return
 	# ONLY PROCEED IF THIS CUSTOMER IS ASSOCIATED WITH A PATIENT FILE. NEEDED TO PREVENT INTERFERENCE WITH INVOICES FROM OTHER APPS
