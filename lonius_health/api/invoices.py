@@ -95,6 +95,7 @@ def start_patient_visit(patient, customer, visit_type="OP"):
 			'due_date': datetime.date.today(),
 			"currency": "KES",
 			"customer": customer,
+			"generated_by": 'Lonius Health',
 			"allocate_advances_automatically": 1
 		})
 		invoice.append('items', {
@@ -246,6 +247,7 @@ def make_invoice_endpoint(patient='', customer='', items=[]):
 			'posting_date': datetime.date.today(),
 			"currency": "KES",
 			"customer": customer,
+			"generated_by": 'Lonius Health',
 			"allocate_advances_automatically": 1
 		})
 		for item in items:
@@ -270,7 +272,7 @@ def validate_payment(doc, handler=None, ignore_zero_balance=False):
 	company = frappe.defaults.get_user_default("company")
 	customer_type = frappe.db.get_value(
 		"Customer", doc.get('customer'), 'customer_type')
-	if customer_type == 'Company':
+	if customer_type == 'Company' && doc.get('generated_by') == 'Lonius Health':
 		validate_insurance_limit(doc)
 		return
 	# ONLY PROCEED IF THIS CUSTOMER IS ASSOCIATED WITH A PATIENT FILE. NEEDED TO PREVENT INTERFERENCE WITH INVOICES FROM OTHER APPS
