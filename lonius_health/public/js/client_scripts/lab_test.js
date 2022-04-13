@@ -4,15 +4,15 @@ frappe.ui.form.on('Lab Test', {
 			// updateSchemeDashboardLT(frm)
 			// frm.dirty()
 			// frm.save()
-			frappe.call({
-				method:"lonius_health.lonius_laboratory.api.lab_test.consolidated_lab_tests_endpoint",
-				args:{
-					"docname":frm.doc.name
-				}
+			// frappe.call({
+			// 	method:"lonius_health.lonius_laboratory.api.lab_test.consolidated_lab_tests_endpoint",
+			// 	args:{
+			// 		"docname":frm.doc.name
+			// 	}
 
-			}).then(
-				// frm.reload_doc()
-				)
+			// }).then(
+			// 	// frm.reload_doc()
+			// 	)
 		}
 	},
     refresh:(frm)=>{
