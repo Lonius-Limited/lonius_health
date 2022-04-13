@@ -231,3 +231,8 @@ user_data_fields = [
 # 	"lonius_health.auth.validate"
 # ]
 
+jenv = {
+	"methods": [
+		"get_consolidated_test:lonius_health.lonius_laboratory.api.lab_test.consolidated_lab_tests_endpoint"
+	]
+}
