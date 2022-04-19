@@ -268,9 +268,13 @@ def get_draft_invoice_total(invoice_doc):
 	return sum(x.get('amount') for x in invoice_doc.get('items'))
 
 def validate_payment(doc, handler=None, ignore_zero_balance=False):
-	# IF CUSTOMER IS OF TYPE COMPANY, THEN RETURN AS WE WILL ACCEPT INVOICING. IF NOT, THERE BETTER BE MONEY FIRST.
+	# ONLY PROCESS IF LONIUS_HEALTH IS THE ORIGINATOR
 	if doc.get('generated_by') != 'Lonius Health':
+		return 
+	# ONLY PROCEED IF PREPAYMENTS HAVE BEEN ACTIVATED.
+	if not frappe.db.get_single_value("Facility Settings", "require_prepayment"):
 		return
+	# IF CUSTOMER IS OF TYPE COMPANY, THEN RETURN AS WE WILL ACCEPT INVOICING. IF NOT, THERE BETTER BE MONEY FIRST.
 	company = frappe.defaults.get_user_default("company")
 	customer_type = frappe.db.get_value(
 		"Customer", doc.get('customer'), 'customer_type')
