@@ -1,3 +1,4 @@
+//bench new-site dev.wireapp.com --admin-password 'velo@2020' --mariadb-root-username root --mariadb-root-password 'velo@2020'
 frappe.ui.form.on('Lab Test', {
 	onload(frm){
 		if(!frm.is_new() && frm.doc.docstatus==1){ 
