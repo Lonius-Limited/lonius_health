@@ -95,6 +95,7 @@ def start_patient_visit(patient, customer, visit_type="OP"):
 			'due_date': datetime.date.today(),
 			"currency": "KES",
 			"customer": customer,
+			"generated_by": 'Lonius Health',
 			"allocate_advances_automatically": 1
 		})
 		invoice.append('items', {
@@ -246,6 +247,7 @@ def make_invoice_endpoint(patient='', customer='', items=[]):
 			'posting_date': datetime.date.today(),
 			"currency": "KES",
 			"customer": customer,
+			"generated_by": 'Lonius Health',
 			"allocate_advances_automatically": 1
 		})
 		for item in items:
@@ -267,6 +269,8 @@ def get_draft_invoice_total(invoice_doc):
 
 def validate_payment(doc, handler=None, ignore_zero_balance=False):
 	# IF CUSTOMER IS OF TYPE COMPANY, THEN RETURN AS WE WILL ACCEPT INVOICING. IF NOT, THERE BETTER BE MONEY FIRST.
+	if doc.get('generated_by') != 'Lonius Health':
+		return
 	company = frappe.defaults.get_user_default("company")
 	customer_type = frappe.db.get_value(
 		"Customer", doc.get('customer'), 'customer_type')
