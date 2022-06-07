@@ -3,7 +3,7 @@ frappe.ui.form.on('Patient', {
         if(!frm.is_new()){ 
             // frappe.throw(frm.doc.name+" ->")  
             let pt = frm.doc.name 
-            frappe.msgprint("Updating dashboard for "+pt)   
+            // frappe.msgprint("Updating dashboard for "+pt)   
             updateSchemeDashboardPt(frm, pt)
             quickVitals(frm)
         }

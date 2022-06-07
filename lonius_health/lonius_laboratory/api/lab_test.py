@@ -8,7 +8,7 @@ def consolidated_lab_tests_endpoint(docname):
 	doc = frappe.get_doc("Lab Test", docname)
 	return consolidated_lab_tests(doc, "endpoint")
 def consolidated_lab_tests(doc, state):
-	frappe.msgprint("Consolidating lab tests....")
+	# frappe.msgprint("Consolidating lab tests....")
 	patient = doc.get('patient')
 	report_name ='Lab Test Report'
 	to_date = doc.get('creation').date()
