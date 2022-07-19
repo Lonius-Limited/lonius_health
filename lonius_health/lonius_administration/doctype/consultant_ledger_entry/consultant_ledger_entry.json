@@ -1,0 +1,47 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2022-06-27 00:29:26.031748",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "encounter",
+  "encounter_date",
+  "amount_invoiced"
+ ],
+ "fields": [
+  {
+   "fieldname": "encounter",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Encounter",
+   "options": "Patient Encounter"
+  },
+  {
+   "fetch_from": "encounter.encounter_date",
+   "fieldname": "encounter_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Encounter Date"
+  },
+  {
+   "default": "0.00",
+   "fieldname": "amount_invoiced",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Amount Invoiced"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2022-06-27 00:30:13.557058",
+ "modified_by": "Administrator",
+ "module": "Lonius Administration",
+ "name": "Consultant Ledger Entry",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
