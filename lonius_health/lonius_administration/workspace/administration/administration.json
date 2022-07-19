@@ -14,7 +14,7 @@
  "is_standard": 1,
  "label": "Administration",
  "links": [],
- "modified": "2022-03-31 23:21:59.685239",
+ "modified": "2022-06-27 00:32:46.770832",
  "modified_by": "Administrator",
  "module": "Lonius Administration",
  "name": "Administration",
@@ -128,6 +128,20 @@
    "doc_view": "",
    "label": "Price Rules",
    "link_to": "Pricing Rule",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Annual Procurement Plan",
+   "link_to": "Procurement Plan",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "format": "{} Paid",
+   "label": "Consultancy Ledger",
+   "link_to": "Consultant Ledger",
+   "stats_filter": "{\n    \"status\":\"Unpaid\"\n}",
    "type": "DocType"
   }
  ],
