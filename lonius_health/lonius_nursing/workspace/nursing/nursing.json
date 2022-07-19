@@ -14,7 +14,7 @@
  "is_standard": 1,
  "label": "Nursing",
  "links": [],
- "modified": "2022-03-31 22:44:14.134604",
+ "modified": "2022-06-27 00:34:20.917968",
  "modified_by": "Administrator",
  "module": "Lonius Nursing",
  "name": "Nursing",
@@ -56,6 +56,14 @@
    "doc_view": "",
    "label": "Shift Assignments",
    "link_to": "Shift Assignment",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "",
+   "format": "{} Submitted",
+   "label": "Cardex Notes",
+   "link_to": "Cardex",
+   "stats_filter": "{\n    \"docstatus\": 1\n}",
    "type": "DocType"
   }
  ],
